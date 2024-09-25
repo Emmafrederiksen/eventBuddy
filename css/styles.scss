@@ -71,6 +71,27 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	}
 }
 
+.overskrift-lille {
+	font-family: agbalumo, serif;
+	font-size: 2rem;
+
+	@media (max-width: 1200px) {
+		font-size: 1.5rem;
+	}
+
+	@media (max-width: 992px) {
+		font-size: 1rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 0.5rem;
+	}
+
+	@media (max-width: 576px) {
+		font-size: 1rem;
+	}
+}
+
 .brødtekst-lille {
 	font-family: 'lato', sans-serif;
 	font-size: 1rem;
@@ -133,3 +154,22 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 		font-size: 1.05rem;
 	}
 }
+
+
+.carousel-control-prev, .carousel-control-next {
+	width: 5%; /* Mindre bredde for pilene */
+	z-index: 2; /* Sørger for at pilene ligger ovenpå alt andet */
+	top: 50%; /* Placerer pilene midt i højden af carouselen */
+	transform: translateY(-50%); /* Sørger for centering vertikalt */
+	position: absolute; /* Fjern fra dokumentflow */
+}
+
+.carousel-control-prev {
+	left: -10%; /* Placerer venstre pil lidt udenfor containeren */
+}
+
+.carousel-control-next {
+	right: -10%; /* Placerer højre pil lidt udenfor containeren */
+}
+
+

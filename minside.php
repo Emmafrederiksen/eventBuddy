@@ -6,7 +6,7 @@ require "settings/init.php";
 <head>
     <meta charset="utf-8">
 
-    <title>EventBuddy</title>
+    <title>Min side</title>
 
     <meta name="robots" content="All">
     <meta name="author" content="Udgiver">
@@ -38,7 +38,7 @@ require "settings/init.php";
     <div class="row w-100 mt-5">
         <div class="col-8 col-sm-10 col-md-8 col-lg-6 col-xl-4 offset-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4 ">
             <div class="mb-4">
-                <a href="minside.php"><button class="btn btn-sekundærknap w-100 rounded-pill p-3 brødtekst-knap">Events oprettet af mig</button></a>
+                <a href="eventsoprettetafmig.php"><button class="btn btn-sekundærknap w-100 rounded-pill p-3 brødtekst-knap">Events oprettet af mig</button></a>
             </div>
 
             <div class="mb-4">
