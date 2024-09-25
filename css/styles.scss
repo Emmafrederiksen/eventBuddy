@@ -8,6 +8,7 @@
 
 // 2. Include any default variable overrides here
 
+$link-decoration: none;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../node_modules/bootstrap/scss/variables";
@@ -17,6 +18,7 @@
 $custom-colors: (
 	"farve": $cyan-400,
 	"primærknap": #C99D45,
+	"sekundærknap": #ffffff,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -49,7 +51,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 }
 
 .overskrift-mellem {
-	font-family: 'lato', sans-serif;
+	font-family: agbalumo, serif;
 	font-size: 2.5rem;
 
 	@media (max-width: 1200px) {
@@ -90,3 +92,44 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	}
 }
 
+.brødtekst-mellem {
+	font-family: 'lato', sans-serif;
+	font-size: 2.5rem;
+
+	@media (max-width: 1200px) {
+		font-size: 2rem;
+	}
+
+	@media (max-width: 992px) {
+		font-size: 1.75rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 1.5rem;
+	}
+
+	@media (max-width: 576px) {
+		font-size: 1.25rem;
+	}
+}
+
+.brødtekst-knap {
+	font-family: 'lato', sans-serif;
+	font-size: 1.25rem;
+
+	@media (max-width: 1200px) {
+		font-size: 1.2rem;
+	}
+
+	@media (max-width: 992px) {
+		font-size: 1.15rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 1.10rem;
+	}
+
+	@media (max-width: 576px) {
+		font-size: 1.05rem;
+	}
+}

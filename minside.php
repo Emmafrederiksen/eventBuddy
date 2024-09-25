@@ -26,29 +26,33 @@ require "settings/init.php";
 </div>
 
 <!-- Første container til overskrift og tekst -->
-<div class="container ">
+<div class="container">
     <div class="row">
-        <div class="col-12 text-light">
-            <p class="overskrift-stor">Min side</p>
+        <div class="py-5">
+            <p class="overskrift-stor text-white">Min side</p>
+            <a href="index.php" class="text-decoration-underline text-white brødtekst-knap">Tilbage</a>
         </div>
+
     </div>
 
-
-    <div class="row w-100">
-        <div class="col-8 col-sm-10 col-md-8 col-lg-6 col-xl-4 offset-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4 brødtekst-lille">
-            <div class="mb-4 mt-5">
-                <input type="text" class="form-control rounded-pill" id="Input" placeholder="Brugernavn">
+    <div class="row w-100 mt-5">
+        <div class="col-8 col-sm-10 col-md-8 col-lg-6 col-xl-4 offset-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4 ">
+            <div class="mb-4">
+                <a href="minside.php"><button class="btn btn-sekundærknap w-100 rounded-pill p-3 brødtekst-knap">Events oprettet af mig</button></a>
             </div>
 
             <div class="mb-4">
-                <input type="password" class="form-control rounded-pill" id="Password" placeholder="Adgangskode">
+                <a href="minside.php"><button class="btn btn-sekundærknap w-100 rounded-pill p-3 brødtekst-knap">Events jeg er inviteret til</button></a>
             </div>
 
-            <div class="mb-5">
-                <button class="btn btn-primærknap w-100 rounded-pill">Log på</button>
+            <div class="mb-4">
+                <a href="minside.php"><button class="btn btn-sekundærknap w-100 rounded-pill p-3 brødtekst-knap">Opret nyt event</button></a>
             </div>
 
-            <p class="text-white text-center">Har du ikke en konto? <a href="#" class="link-underline text-white fw-medium">Opret dig her</a> </p>
+            <div class="mb-4">
+                <a href="minside.php"><button class="btn btn-sekundærknap w-100 rounded-pill p-3 brødtekst-knap">Min profil</button></a>
+            </div>
+
         </div>
     </div>
 

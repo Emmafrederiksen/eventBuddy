@@ -30,7 +30,7 @@ require "settings/init.php";
     <div class="row">
         <div class="col-12 text-center text-light fs-1">
             <p class="overskrift-stor">Velkommen til din event buddy</p>
-            <span class="overskrift-mellem">Skal du planlægge</span>
+            <span class="brødtekst-mellem">Skal du planlægge</span>
             <span id="featureText" class="overskrift-mellem"></span>
             <span class="inputCursor"></span>
         </div>
@@ -38,20 +38,20 @@ require "settings/init.php";
 
 
     <div class="row w-100">
-        <div class="col-8 col-sm-10 col-md-8 col-lg-6 col-xl-4 offset-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4 brødtekst-lille">
+        <div class="col-8 col-sm-10 col-md-8 col-lg-6 col-xl-4 offset-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4">
             <div class="mb-4 mt-5">
-                <input type="text" class="form-control rounded-pill" id="Input" placeholder="Brugernavn">
+                <input type="text" class="form-control rounded-pill p-2 brødtekst-knap ps-3" id="Input" placeholder="Brugernavn">
             </div>
 
             <div class="mb-4">
-                <input type="password" class="form-control rounded-pill" id="Password" placeholder="Adgangskode">
+                <input type="password" class="form-control rounded-pill p-2 brødtekst-knap ps-3" id="Password" placeholder="Adgangskode">
             </div>
 
             <div class="mb-5">
-                <a href="minside.php"><button class="btn btn-primærknap w-100 rounded-pill">Log på</button></a>
+                <a href="minside.php"><button class="btn btn-primærknap w-100 rounded-pill p-2 brødtekst-knap">Log på</button></a>
             </div>
 
-            <p class="text-white text-center">Har du ikke en konto? <a href="#" class="text-white fw-medium text-decoration-underline">Opret dig her</a></p>
+            <p class="text-white text-center">Har du ikke en konto? <a href="#" class="text-white fw-medium text-decoration-underline brødtekst-lille">Opret dig her</a></p>
         </div>
     </div>
 
