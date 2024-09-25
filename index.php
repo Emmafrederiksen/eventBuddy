@@ -51,7 +51,7 @@ require "settings/init.php";
                 <button class="btn btn-primærknap w-100 rounded-pill">Log på</button>
             </div>
 
-            <p class="text-white text-center">Har du ikke en konto? <a href="#" class="link-underline text-white fw-medium">Opret dig her</a> </p>
+            <p class="text-white text-center">Har du ikke en konto? <a href="minside.php" class="link-underline text-white fw-medium">Opret dig her</a> </p>
         </div>
     </div>
 
