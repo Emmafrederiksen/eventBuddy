@@ -61,7 +61,7 @@ require "settings/init.php";
                         <div class="card mx-5 mb-4" style="width: 20rem;">
                             <h5 class="card-title text-center overskrift-lille"><?php echo $event->evenName; ?></h5>
                             <div class="card-body">
-                                <img src="<?php echo $event->evenImage; ?>" class="card-img-top" alt="...">
+                                <img src="images/<?php echo $event->evenImage; ?>" class="card-img-top" alt="...">
                             </div>
                             <div class="card-footer text-center">
                                 <a href="#" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
