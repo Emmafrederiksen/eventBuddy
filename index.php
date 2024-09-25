@@ -48,10 +48,10 @@ require "settings/init.php";
             </div>
 
             <div class="mb-5">
-                <button class="btn btn-primærknap w-100 rounded-pill">Log på</button>
+                <a href="minside.php"><button class="btn btn-primærknap w-100 rounded-pill">Log på</button></a>
             </div>
 
-            <p class="text-white text-center">Har du ikke en konto? <a href="minside.php" class="link-underline text-white fw-medium">Opret dig her</a> </p>
+            <p class="text-white text-center">Har du ikke en konto? <a href="#" class="text-white fw-medium text-decoration-underline">Opret dig her</a></p>
         </div>
     </div>
 
