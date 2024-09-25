@@ -1,8 +1,13 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
-$link-decoration: none;
+
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../node_modules/bootstrap/scss/variables";
@@ -11,6 +16,7 @@ $link-decoration: none;
 // 4. Include any default map overrides here
 $custom-colors: (
 	"farve": $cyan-400,
+	"primærknap": #C99D45,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -18,3 +24,69 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "bootstrapComponents";
 
 // 5. Du kan lave styling her...
+
+
+.overskrift-stor {
+	font-family: agbalumo, serif;
+	font-size: 5rem;
+	line-height: 1.2;
+
+	@media (max-width: 1200px) {
+		font-size: 4rem; // Gør den lidt mindre på store tablets og laptops
+	}
+
+	@media (max-width: 992px) {
+		font-size: 3rem; // Mindre på mindre skærme
+	}
+
+	@media (max-width: 768px) {
+		font-size: 2.3rem; // Til tablets
+	}
+
+	@media (max-width: 576px) {
+		font-size: 2rem; // Til mobil
+	}
+}
+
+.overskrift-mellem {
+	font-family: 'lato', sans-serif;
+	font-size: 2.5rem;
+
+	@media (max-width: 1200px) {
+		font-size: 2rem;
+	}
+
+	@media (max-width: 992px) {
+		font-size: 1.75rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 1.5rem;
+	}
+
+	@media (max-width: 576px) {
+		font-size: 1.25rem;
+	}
+}
+
+.brødtekst-lille {
+	font-family: 'lato', sans-serif;
+	font-size: 1rem;
+
+	@media (max-width: 1200px) {
+		font-size: 0.95rem;
+	}
+
+	@media (max-width: 992px) {
+		font-size: 0.9rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 0.85rem;
+	}
+
+	@media (max-width: 576px) {
+		font-size: 0.8rem;
+	}
+}
+
