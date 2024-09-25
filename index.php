@@ -6,7 +6,7 @@ require "settings/init.php";
 <head>
 	<meta charset="utf-8">
 	
-	<title>Sigende titel</title>
+	<title>EventBuddy</title>
 	
 	<meta name="robots" content="All">
 	<meta name="author" content="Udgiver">
