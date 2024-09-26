@@ -30,7 +30,7 @@ require "settings/init.php";
     <div class="row">
         <div class="py-5">
             <p class="overskrift-stor text-white">Events oprettet af mig</p>
-            <a href="minside.php" class="text-decoration-underline text-white brødtekst-knap">Tilbage</a>
+            <a href="minside.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
     </div>
 </div>

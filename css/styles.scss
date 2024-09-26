@@ -173,3 +173,25 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 }
 
 
+.btn-minside {
+	background-color: white;
+	color: black;
+	transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.btn-minside:hover {
+	background-color: #c99d45;
+	color: white;
+}
+
+
+
+.tilbageknap {
+	background-color: transparent; /* Sørger for ingen baggrundsfarve */
+	color: white; /* Startfarve for teksten */
+	transition: color 0.4s ease; /* Overgang for kun farven */
+}
+
+.tilbageknap:hover {
+	color: #c99d45; /* Teksten skifter til guld ved hover */
+}
