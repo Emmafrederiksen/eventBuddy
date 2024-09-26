@@ -62,7 +62,7 @@ require "settings/init.php";
                                 <img src="images/<?php echo $event->evenImage; ?>" class="card-img-top" alt="...">
                             </div>
                             <div class="card-footer text-center py-4">
-                                <a href="#" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
+                                <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
                             </div>
                         </div>
 
