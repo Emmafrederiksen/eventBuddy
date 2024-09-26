@@ -46,7 +46,7 @@ require "settings/init.php";
             </div>
 
             <div class="mb-4">
-                <a href="minside.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Opret nyt event</button></a>
+                <a href="opretnytevent.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Opret nyt event</button></a>
             </div>
 
             <div class="mb-4">
