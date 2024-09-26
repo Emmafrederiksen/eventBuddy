@@ -19,6 +19,7 @@ $custom-colors: (
 	"farve": $cyan-400,
 	"primærknap": #C99D45,
 	"sekundærknap": #ffffff,
+	"primærtekst": #C99D45,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
