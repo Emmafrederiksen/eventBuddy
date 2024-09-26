@@ -7,7 +7,7 @@ require "settings/init.php";
 <head>
     <meta charset="utf-8">
 
-    <title>Events oprettet af mig</title>
+    <title>Events jeg er inviteret til</title>
 
     <meta name="robots" content="All">
     <meta name="author" content="Udgiver">
@@ -29,7 +29,7 @@ require "settings/init.php";
 <div class="container">
     <div class="row">
         <div class="py-5">
-            <p class="overskrift-stor text-white">Events oprettet af mig</p>
+            <p class="overskrift-stor text-white">Events jeg er inviteret til</p>
             <a href="minside.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
     </div>
@@ -39,7 +39,6 @@ require "settings/init.php";
 <br>
 <br>
 <br>
-
 
 
 <div class="container">
