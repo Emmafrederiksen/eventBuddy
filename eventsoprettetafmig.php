@@ -40,8 +40,6 @@ require "settings/init.php";
 <br>
 <br>
 
-
-
 <div class="container">
     <div id="eventCarousel" class="carousel slide" data-bs-interval="false">
         <div class="carousel-inner">
