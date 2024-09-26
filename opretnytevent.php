@@ -36,38 +36,65 @@ if (!empty($_POST)) {
 </head>
 
 
-<body>
+<body class="bg-info">
 
 <div class="container">
-    <h1>Tilføj nyt event</h1>
-    <form method="post" action="opretnytevent..php">
-        <div class="mb-3 col-12 col-md-6">
-            <label for="bookTitle" class="form-label">Navn på event</label>
-            <input type="text" name="evenName" id="evenName" class="form-control" required>
+    <div class="row">
+        <div class="py-5">
+            <p class="overskrift-stor text-white">Events oprettet af mig</p>
+            <a href="minside.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
-        <div class="mb-3 col-12 col-md-6">
-            <label for="bookYear" class="form-label">Dato og tid</label>
-            <input type="number" name="evenDateTime" id="evenDateTime" class="form-control" required>
+    </div>
+</div>
+
+
+<div class="container">
+    <form method="post" action="opretnytevent.php">
+        <div class="row">
+            <!-- Første række med to felter -->
+            <div class="mb-4 col-12 col-md-6">
+                <label for="evenName" class="form-label">Navn på event</label>
+                <input type="text" name="evenName" id="evenName"
+                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+            </div>
+            <div class="mb-4 col-12 col-md-6">
+                <label for="evenDateTime" class="form-label">Dato og tid</label>
+                <input type="datetime-local" name="evenDateTime" id="evenDateTime"
+                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+            </div>
+
+            <!-- Anden række med to felter -->
+            <div class="mb-4 col-12 col-md-6">
+                <label for="evenLocation" class="form-label">Lokation</label>
+                <input type="text" name="evenLocation" id="evenLocation"
+                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+            </div>
+            <div class="mb-4 col-12 col-md-6">
+                <label for="evenImage" class="form-label">Indsæt billede</label>
+                <input type="file" name="evenImage" id="evenImage"
+                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+            </div>
+
+            <!-- Tredje række med to felter -->
+            <div class="mb-4 col-12 col-md-6">
+                <label for="evenGuest" class="form-label">Inviter gæster</label>
+                <input type="text" name="evenGuest" id="evenGuest"
+                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+            </div>
+            <div class="mb-4 col-12 col-md-6">
+                <label for="evenDescription" class="form-label">Beskrivelse af event</label>
+                <input type="text" name="evenDescription" id="evenDescription"
+                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+            </div>
+
+            <!-- Submit-knap i bunden -->
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primærknap w-50 rounded-pill p-2 brødtekst-knap">Opret event</button>
+            </div>
         </div>
-        <div class="mb-3 col-12 col-md-6">
-            <label for="bookGenre" class="form-label">Lokation</label>
-            <input type="text" name="evenLocation" id="evenLocation" class="form-control" required>
-        </div>
-        <div class="mb-3 col-12 col-md-6">
-            <label for="bookGenre" class="form-label">Indsæt billede</label>
-            <input type="text" name="evenImage" id="evenImage" class="form-control" required>
-        </div>
-        <div class="mb-3 col-12 col-md-6">
-            <label for="bookGenre" class="form-label">Inviter gæster</label>
-            <input type="text" name="#" id="#" class="form-control" required>
-        </div>
-        <div class="mb-3 col-12 col-md-6">
-            <label for="bookGenre" class="form-label">Beskrivelse af event</label>
-            <input type="text" name="evenDescription" id="evenDescription" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Opret event</button>
     </form>
 </div>
+
 
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
