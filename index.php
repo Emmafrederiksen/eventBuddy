@@ -23,8 +23,6 @@ require "settings/init.php";
          style="object-fit: cover;">
 </div>
 
-
-
 <!-- Første container til overskrift og tekst -->
 <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
     <div class="row">
