@@ -17,6 +17,8 @@ require "settings/init.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
+
+
 <body>
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
     <img src="images/background1.webp" alt="background" class="position-absolute top-0 start-0 w-100 h-100"
