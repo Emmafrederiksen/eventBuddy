@@ -13,9 +13,10 @@ if (!empty($_POST)) {
         ":evenImage" => $_POST["evenImage"]
     ]);
 
-    // Redirect tilbage til adminEvents.php
-    header("Location: minside.php");
-    exit;
+    // Omdiriger til "eventsoprettetafmig.php" efter at eventet er oprettet
+    header("Location: eventsoprettetafmig.php");
+    exit(); // Sørger for at stoppe yderligere behandling
+
 }
 ?>
 
@@ -24,7 +25,7 @@ if (!empty($_POST)) {
 <head>
     <meta charset="utf-8">
 
-    <title>EventBuddy</title>
+    <title>Opret nyt event</title>
 
     <meta name="robots" content="All">
     <meta name="author" content="Udgiver">
@@ -87,16 +88,36 @@ if (!empty($_POST)) {
                        class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
             </div>
 
+
             <!-- Submit-knap i bunden -->
             <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primærknap w-50 rounded-pill p-2 brødtekst-knap">Opret event</button>
+                <button type="submit" class="btn btn-primærknap w-50 rounded-pill p-2 brødtekst-knap" id="opretevent">Opret event</button>
             </div>
         </div>
     </form>
 </div>
 
-
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    const opretEvent = document.getElementById("opretevent");
+
+    opretEvent.addEventListener("click", function(e) {
+        // Vis en bekræftelsesdialog
+        if (confirm("Dit event er nu oprettet. Se dine events?")) {
+            // Hvis brugeren trykker "OK", fortsætter formularens standard opførsel
+            // Efter indsendelse, omdiriger til den ønskede side
+            window.location.href = "eventsoprettetafmig.php"; // Rediriger til den side du ønsker
+        } else {
+            e.preventDefault(); // Hvis brugeren trykker "Annuller", forhindres indsendelsen
+        }
+    });
+
+
+
+
+
+</script>
 </body>
 </html>
-
