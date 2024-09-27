@@ -21,9 +21,9 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
         ":evenId" => $_POST["evenId"]
     ]);
 
-    // Omdiriger til en anden side efter opdateringen
-    header("Location: redigerevent.php?succes=1&evenId=" . $_POST['evenId']);
-    exit;
+
+    header("Location: eventsoprettetafmig.php");
+    exit();
 }
 
 // Hvis Id mangler i URL'en, omdiriger til en anden side
@@ -123,8 +123,7 @@ if (!empty($_GET["succes"]) && $_GET['succes'] == 1) {
 
             <!-- Submit-knap i bunden -->
             <div class="col-12 text-center">
-                <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
-                <button type="submit" class="btn btn-primærknap knap w-50 rounded-pill p-2 brødtekst-knap">Opdater eventet</button>
+                <button type="submit" class="btn btn-primærknap knap w-50 rounded-pill p-2 brødtekst-knap" id="redigerEvent">Opdater eventet</button>
             </div>
 
             <!-- Link til sletning af event -->
@@ -139,6 +138,7 @@ if (!empty($_GET["succes"]) && $_GET['succes'] == 1) {
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+
     const deleteLink = document.querySelectorAll(".deleteLink");
 
     deleteLink.forEach(function (link) {
@@ -149,6 +149,19 @@ if (!empty($_GET["succes"]) && $_GET['succes'] == 1) {
             }
         });
     });
+
+
+    const redigerEvent = document.getElementById("redigerEvent");
+
+    redigerEvent.addEventListener("click", function(e) {
+
+        if (confirm("Dit event er nu opdateret. Se dine events?")) {
+            window.location.href = "eventsoprettetafmig.php";
+        } else {
+            e.preventDefault(); //
+        }
+    });
+
 
 </script>
 </body>
