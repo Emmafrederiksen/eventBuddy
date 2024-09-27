@@ -1,7 +1,20 @@
 <?php
 /** @var PDO $db */
 require "settings/init.php";
+
+// Fiktivt bruger-ID (skal erstattes med det rigtige ID fra login-systemet senere)
+$loggedInUserId = 3;
+
+// Hent alle events, som brugeren er inviteret til, fra connection-tabellen event_guest_con
+$invitedEvents = $db->sql("
+    SELECT * 
+    FROM events 
+    JOIN event_guest_con ON events.evenId = event_guest_con.evgueEvenId 
+    WHERE event_guest_con.evgueGuesId = :guestId",
+    [":guestId" => $loggedInUserId]
+);
 ?>
+
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -35,21 +48,21 @@ require "settings/init.php";
     </div>
 </div>
 
-<br>
-<br>
-<br>
-<br>
 
+<br>
+<br>
+<br>
+<br>
 
 <div class="container">
     <div id="eventCarousel" class="carousel slide" data-bs-interval="false">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="d-flex justify-content-start">
+                    <!-- Brug den opdaterede $eventsCreated variabel til kun at vise brugerens oprettede events -->
                     <?php
-                    $events = $db->sql("SELECT evenId, evenName, evenImage FROM events ORDER BY evenDateTime ASC");
                     $count = 0;
-                    foreach ($events as $event) {
+                    foreach ($invitedEvents as $event) {
 
                         // Starter en ny række for hvert tredje kort
                         if ($count % 3 == 0 && $count != 0) {
@@ -63,7 +76,7 @@ require "settings/init.php";
                                 <img src="images/<?php echo $event->evenImage; ?>" class="card-img-top" alt="...">
                             </div>
                             <div class="card-footer text-center py-4">
-                                <a href="#" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se event</a>
+                                <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
                             </div>
                         </div>
 
@@ -91,7 +104,6 @@ require "settings/init.php";
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
         const carousel = document.getElementById('eventCarousel');
         const prevButton = document.querySelector('.carousel-control-prev');
