@@ -66,7 +66,7 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
     <div class="row">
         <div class="py-5">
             <p class="overskrift-stor text-white">Rediger <?php echo $event->evenName; ?></p>
-            <a href="minside.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
+            <a href="eventsoprettetafmig.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
     </div>
 </div>
