@@ -1,6 +1,14 @@
 <?php
 /** @var PDO $db */
 require "settings/init.php";
+
+// Fiktivt bruger-ID (du kan erstatte det med sessions-ID senere, når login-systemet er implementeret)
+$loggedInUserId = 1;
+
+// Hent alle events, som brugeren har oprettet, fra connection-tabellen
+$eventsCreated = $db->sql("SELECT * FROM events JOIN event_user_con ON events.evenId = event_user_con.evuseEvenId WHERE event_user_con.evuseUserId = :userId", [":userId" => $loggedInUserId
+]);
+
 ?>
 <!DOCTYPE html>
 <html lang="da">
@@ -35,6 +43,7 @@ require "settings/init.php";
     </div>
 </div>
 
+
 <br>
 <br>
 <br>
@@ -45,10 +54,10 @@ require "settings/init.php";
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="d-flex justify-content-start">
+                    <!-- Brug den opdaterede $eventsCreated variabel til kun at vise brugerens oprettede events -->
                     <?php
-                    $events = $db->sql("SELECT evenId, evenName, evenImage FROM events ORDER BY evenDateTime ASC");
                     $count = 0;
-                    foreach ($events as $event) {
+                    foreach ($eventsCreated as $event) {
 
                         // Starter en ny række for hvert tredje kort
                         if ($count % 3 == 0 && $count != 0) {
@@ -90,7 +99,6 @@ require "settings/init.php";
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
         const carousel = document.getElementById('eventCarousel');
         const prevButton = document.querySelector('.carousel-control-prev');
