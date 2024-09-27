@@ -13,9 +13,9 @@ if (!empty($_POST)) {
         ":evenImage" => $_POST["evenImage"]
     ]);
 
-    // Omdiriger til "eventsoprettetafmig.php" efter at eventet er oprettet
+
     header("Location: eventsoprettetafmig.php");
-    exit(); // Sørger for at stoppe yderligere behandling
+    exit();
 
 }
 ?>
@@ -104,13 +104,9 @@ if (!empty($_POST)) {
     const opretEvent = document.getElementById("opretevent");
 
     opretEvent.addEventListener("click", function(e) {
-        // Vis en bekræftelsesdialog
         if (confirm("Dit event er nu oprettet. Se dine events?")) {
-            // Hvis brugeren trykker "OK", fortsætter formularens standard opførsel
-            // Efter indsendelse, omdiriger til den ønskede side
-            window.location.href = "eventsoprettetafmig.php"; // Rediriger til den side du ønsker
         } else {
-            e.preventDefault(); // Hvis brugeren trykker "Annuller", forhindres indsendelsen
+            e.preventDefault();
         }
     });
 
