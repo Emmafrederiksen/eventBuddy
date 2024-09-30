@@ -3,16 +3,15 @@
 require "settings/init.php";
 
 // Fiktivt bruger-ID (skal erstattes med det rigtige ID fra login-systemet senere)
-$loggedInUserId = 3;
+$loggedInUserId = 1;
 
-// Hent alle events, som brugeren er inviteret til, fra connection-tabellen event_guest_con
-$invitedEvents = $db->sql("
-    SELECT * 
-    FROM events 
-    JOIN event_guest_con ON events.evenId = event_guest_con.evgueEvenId 
-    WHERE event_guest_con.evgueGuesId = :guestId",
-    [":guestId" => $loggedInUserId]
-);
+// Hent alle events, hvor brugeren er gæst (evuseOwner = 0)
+$invitedEvents  = $db->sql("
+    SELECT * FROM events JOIN event_user_con ON events.evenId = event_user_con.evuseEvenId 
+    WHERE event_user_con.evuseUserId = :userId
+    AND event_user_con.evuseOwner = 0", [
+    ":userId" => $loggedInUserId
+]);
 ?>
 
 <!DOCTYPE html>

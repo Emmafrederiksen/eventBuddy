@@ -5,11 +5,15 @@ require "settings/init.php";
 // Fiktivt bruger-ID (du kan erstatte det med sessions-ID senere, når login-systemet er implementeret)
 $loggedInUserId = 1;
 
-// Hent alle events, som brugeren har oprettet, fra connection-tabellen
-$eventsCreated = $db->sql("SELECT * FROM events JOIN event_user_con ON events.evenId = event_user_con.evuseEvenId WHERE event_user_con.evuseUserId = :userId", [":userId" => $loggedInUserId
+// Hent alle events, som brugeren har oprettet (evuseOwner = 1)
+$eventsCreated = $db->sql("
+    SELECT * FROM events JOIN event_user_con ON events.evenId = event_user_con.evuseEvenId 
+    WHERE event_user_con.evuseUserId = :userId
+    AND event_user_con.evuseOwner = 1", [
+    ":userId" => $loggedInUserId
 ]);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="da">
 <head>
