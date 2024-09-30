@@ -61,7 +61,7 @@ $eventsCreated = $db->sql("SELECT * FROM events JOIN event_user_con ON events.ev
 
                         // Starter en ny række for hvert tredje kort
                         if ($count % 3 == 0 && $count != 0) {
-                            echo '</div></div><div class="carousel-item"><div class="d-flex justify-content-start flex-wrap">';
+                            echo '</div></div><div class="carousel-item"><div class="d-flex justify-content-start">';
                         }
                         ?>
 
