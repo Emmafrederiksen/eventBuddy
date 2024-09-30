@@ -21,7 +21,6 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
         ":evenId" => $_POST["evenId"]
     ]);
 
-
     header("Location: eventsoprettetafmig.php");
     exit();
 }
@@ -71,14 +70,9 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
     </div>
 </div>
 
-<?php
-if (!empty($_GET["succes"]) && $_GET['succes'] == 1) {
-    echo "<p class='brødtekst-lille'>Eventet er opdateret</p>";
-}
-?>
 
 <div class="container">
-    <form method="post" action="redigerevent.php">
+    <form method="post" action="redigerevent.php" id="redigerEventForm">
         <div class="row">
             <!-- Første række med to felter -->
             <div class="mb-4 col-12 col-lg-6">
@@ -123,6 +117,7 @@ if (!empty($_GET["succes"]) && $_GET['succes'] == 1) {
 
             <!-- Submit-knap i bunden -->
             <div class="col-12 text-center">
+                <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
                 <button type="submit" class="btn btn-primærknap knap w-50 rounded-pill p-2 brødtekst-knap" id="redigerEvent">Opdater eventet</button>
             </div>
 
@@ -152,13 +147,13 @@ if (!empty($_GET["succes"]) && $_GET['succes'] == 1) {
 
 
     const redigerEvent = document.getElementById("redigerEvent");
+    const redigerEventForm = document.getElementById("redigerEventForm");
 
     redigerEvent.addEventListener("click", function(e) {
+        e.preventDefault();
 
         if (confirm("Dit event er nu opdateret. Se dine events?")) {
-            window.location.href = "eventsoprettetafmig.php";
-        } else {
-            e.preventDefault(); //
+            redigerEventForm.submit();
         }
     });
 
