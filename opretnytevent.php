@@ -3,6 +3,9 @@
 require "settings/init.php";
 
 if (!empty($_POST)) {
+
+
+
     // Hent input fra formularen og indsæt det i databasen
     $db->sql("INSERT INTO events (evenName, evenDateTime, evenLocation, evenDescription, evenImage) 
               VALUES (:evenName, :evenDateTime, :evenLocation, :evenDescription, :evenImage)", [
@@ -50,7 +53,7 @@ if (!empty($_POST)) {
 
 
 <div class="container">
-    <form method="post" action="opretnytevent.php">
+    <form method="post" action="opretnytevent.php" enctype="multipart/form-data">
         <div class="row">
             <!-- Første række med to felter -->
             <div class="mb-4 col-12 col-md-6">
