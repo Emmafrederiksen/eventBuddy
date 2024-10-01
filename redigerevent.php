@@ -1,11 +1,30 @@
 <?php
 /** @var PDO $db */
 require "settings/init.php";
+require "uploads.php"; // Inkluder billedehåndteringen fra uploads.php
 
 // Hvis formularen er indsendt, opdater eventets data
 if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
     $data = $_POST['data'];
 
+    if (!empty($_FILES['evenImage']['name'])) {
+        // Håndter billedeupload via uploads.php (Hvis et nyt billede er valgt)
+        $uploadedImage = uploadImage('evenImage', 'userimages/');
+        if ($uploadedImage) {
+            $data['evenImage'] = $uploadedImage; // Gem det uploadede billednavn
+        } else {
+            echo "Fejl ved upload af billede.";
+            exit;
+        }
+    } else {
+        // Hvis der ikke er uploadet et nyt billede, behold det gamle
+        $event = $db->sql("SELECT evenImage FROM events WHERE evenId = :evenId", [":evenId" => $_POST["evenId"]]);
+        $data['evenImage'] = $event[0]->evenImage; // Gem det eksisterende billede
+    }
+
+
+
+    // Opdater eventdata i databasen
     $db->sql("UPDATE events SET 
         evenName = :evenName, 
         evenDateTime = :evenDateTime, 
@@ -21,24 +40,57 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
         ":evenId" => $_POST["evenId"]
     ]);
 
-    header("Location: eventsoprettetafmig.php");
+    // Håndter tilføjelse eller fjernelse af gæster
+    // Håndter tilføjelse og fjernelse af gæster
+    if (!empty($_POST["guests"])) {
+        // Hent eksisterende gæster for eventet
+        $existingGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [
+            ":evenId" => $_POST["evenId"]
+        ]);
+
+        $existingGuestIds = array_column($existingGuests, 'evuseUserId'); // Konverter til array med userId'er
+
+        // Tilføj nye gæster
+        foreach ($_POST["guests"] as $guest) {
+            if (!in_array($guest, $existingGuestIds)) {
+                $db->sql("INSERT INTO event_user_con (evuseEvenId, evuseUserId, evuseOwner) 
+                      VALUES (:evuseEvenId, :evuseUserId, 0)", [
+                    ":evuseEvenId" => $_POST["evenId"],
+                    ":evuseUserId" => $guest
+                ]);
+            }
+        }
+
+        // Fjern gæster, der ikke længere er valgt
+        foreach ($existingGuestIds as $guestId) {
+            if (!in_array($guestId, $_POST["guests"])) {
+                $db->sql("DELETE FROM event_user_con WHERE evuseEvenId = :evenId AND evuseUserId = :userId", [
+                    ":evenId" => $_POST["evenId"],
+                    ":userId" => $guestId
+                ]);
+            }
+        }
+    }
+
+
+    // Omdiriger efter succes
+    header("Location: eventsoprettetafmig.php?success=1");
     exit();
 }
 
-// Hvis Id mangler i URL'en, omdiriger til en anden side
-if (empty($_GET["evenId"])) {
-    header("Location: eventsoprettetafmig.php");
-    exit;
-}
-
-$evenId = $_GET["evenId"];
+// Hent alle brugere, så de kan vælges som gæster
+$users = $db->sql("SELECT * FROM users");
 
 // Hent eventets oplysninger fra databasen
+$evenId = $_GET["evenId"];
 $event = $db->sql("SELECT * FROM events WHERE evenId = :evenId", [":evenId" => $evenId]);
-$event = $event[0]; // Vælg den første (og eneste) række fra resultatet
+$event = $event[0];
 
+// Hent de allerede inviterede gæster
+$invitedGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [":evenId" => $evenId]);
+
+// Slet event
 if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) {
-    $evenId = $_GET['evenId'];
     $db->sql("DELETE FROM events WHERE evenId = :evenId", [":evenId" => $evenId]);
 
     // Omdiriger efter sletning
@@ -46,6 +98,9 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
     exit;
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="da">
@@ -72,7 +127,7 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
 
 
 <div class="container">
-    <form method="post" action="redigerevent.php" id="redigerEventForm">
+    <form method="post" action="redigerevent.php" enctype="multipart/form-data" id="redigerEventForm">
         <div class="row">
             <!-- Første række med to felter -->
             <div class="mb-4 col-12 col-lg-6">
@@ -95,19 +150,42 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
                        value="<?php echo $event->evenLocation; ?>"
                        class="form-control rounded-pill p-2 brødtekst-knap" required>
             </div>
+
             <div class="mb-4 col-12 col-lg-6">
                 <label for="evenImage" class="form-label">Indsæt billede</label>
-                <input type="file" name="data[evenImage]" id="evenImage"
-                       class="form-control rounded-pill p-2 brødtekst-knap" required>
+
+                <!-- Filinput til nyt billede -->
+                <input type="file" name="evenImage" id="evenImage" class="form-control rounded-pill p-2 brødtekst-knap" aria-label="Indsæt billede">
+
+                <!-- Skjult element til at vise det eksisterende billede -->
+                <small id="existingFile" class="text-muted">
+                    <?php if (!empty($event->evenImage)): ?>
+                        Nuværende billede: <?php echo $event->evenImage; ?>
+                    <?php else: ?>
+                        Der er ikke valgt nogen fil
+                    <?php endif; ?>
+                </small>
             </div>
 
-            <!-- Tredje række med to felter -->
+
             <div class="mb-4 col-12 col-lg-6">
                 <label for="evenGuest" class="form-label">Inviter gæster</label>
-                <input type="text" name="data[evenGuest]" id="evenGuest"
-                       value="<?php echo $event->evenGuest; ?>"
-                       class="form-control rounded-pill p-2 brødtekst-knap" required>
+                <div class="form-control" style="height: auto; max-height: 200px; overflow-y: scroll;">
+                    <?php foreach ($users as $user): ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="guests[]" value="<?php echo $user->userId; ?>"
+                                   id="guest_<?php echo $user->userId; ?>"
+                                <?php echo in_array($user->userId, array_column($invitedGuests, 'evuseUserId')) ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="guest_<?php echo $user->userId; ?>">
+                                <?php echo $user->userName; ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
+
+
+
             <div class="mb-4 col-12 col-lg-6">
                 <label for="evenDescription" class="form-label">Beskrivelse af event</label>
                 <input type="text" name="data[evenDescription]" id="evenDescription"
