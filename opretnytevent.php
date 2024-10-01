@@ -1,4 +1,4 @@
-<?php global $evenId;
+<?php
 /** @var PDO $db */
 require "settings/init.php";
 require "uploads.php"; // Inkluder billedeuploadhåndtering
@@ -30,12 +30,12 @@ if (!empty($_POST)) {
             $eventId = $event[0]->evenId;
 
             // Tilføj de valgte gæster til eventet
-            if (!empty($_POST["guests"])) {
-                foreach ($_POST["guests"] as $guest) {
+            if (!empty($_POST["users"])) {
+                foreach ($_POST["users"] as $user) {
                     $db->sql("INSERT INTO event_user_con (evuseEvenId, evuseUserId, evuseOwner) 
                               VALUES (:evuseEvenId, :evuseUserId, 0)", [
                         ":evuseEvenId" => $eventId,
-                        ":evuseUserId" => $guest
+                        ":evuseUserId" => $user
                     ]);
                 }
             }
