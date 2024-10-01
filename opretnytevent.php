@@ -3,6 +3,10 @@
 require "settings/init.php";
 require "uploads.php"; // Inkluder billedeuploadhåndtering
 
+// Hent evenId fra URL'en
+$evenId = $_GET["evenId"];  // Sørg for at 'evenId' findes i URL'en
+
+
 // Hvis formularen er indsendt, tilføj eventet og inviterede gæster
 if (!empty($_POST)) {
     // Håndter billedeupload via uploads.php
@@ -117,8 +121,8 @@ $users = $db->sql("SELECT * FROM users");
                     <!-- Checkboxes til at vælge gæster -->
                     <?php foreach ($users as $user): ?>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="guests[]" value="<?php echo $user->userId; ?>" id="guest_<?php echo $user->userId; ?>">
-                            <label class="form-check-label" for="guest_<?php echo $user->userId; ?>">
+                            <input class="form-check-input" type="checkbox" name="users[]" value="<?php echo $user->userId; ?>" id="users_<?php echo $user->userId; ?>">
+                            <label class="form-check-label" for="users_<?php echo $user->userId; ?>">
                                 <?php echo $user->userName; ?>
                             </label>
                         </div>
