@@ -103,7 +103,9 @@ if (!empty($userStatus)) {
 
         <div class="col-5">
             <p class="overskrift-mellem text-white pt-5">Dato og tid:</p>
-            <p class="brødtekst-mellem text-white"><?php echo $event->evenDateTime; ?></p>
+            <p class="brødtekst-mellem text-white">
+                <?php echo (new DateTime($event->evenDateTime))->format('d. F Y, \k\l. H:i'); ?>
+            </p>
         </div>
 
         <div class="col-2"></div>
