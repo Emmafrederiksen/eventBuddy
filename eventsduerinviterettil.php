@@ -75,7 +75,7 @@ $invitedEvents  = $db->sql("
                                 <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="...">
                             </div>
                             <div class="card-footer text-center py-4">
-                                <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se mere</a>
+                                <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se mere</a>
                             </div>
                         </div>
 
