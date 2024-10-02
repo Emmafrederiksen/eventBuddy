@@ -58,6 +58,7 @@ if (!empty($userStatus)) {
     <meta name="author" content="Udgiver">
     <meta name="copyright" content="Information om copyright">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -99,7 +100,11 @@ if (!empty($userStatus)) {
         <div class="col-sm-12 col-md-5 col-lg-5">
             <p class="overskrift-mellem text-white">Lokation:</p>
             <p class="brødtekst-lille text-white"><?php echo $event->evenLocation; ?></p>
+            <div id="map" style="height: 300px; width: 100%;"></div>
         </div>
+
+
+
 
         <div class="col-sm-12 col-md-5 col-lg-5">
             <p class="overskrift-mellem text-white pt-lg-5">Dato og tid:</p>
@@ -133,8 +138,13 @@ if (!empty($userStatus)) {
 </div>
 
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
+
+
+    // Deltager/deltager ikke knapper
+
     const deltagerBtn = document.getElementById('deltagerBtn');
     const ikkeDeltagerBtn = document.getElementById('ikkeDeltagerBtn');
     const statusField = document.getElementById('status');
@@ -175,6 +185,8 @@ if (!empty($userStatus)) {
     });
 
 
+
+
     // AJAX kald til at hente gaestelisten fra gaesteliste.php undersiden
 
     document.getElementById('openGaesteliste').addEventListener('click', function() {
@@ -189,6 +201,44 @@ if (!empty($userStatus)) {
             })
             .catch(error => console.error('Fejl ved hentning af gæsteliste:', error));
     });
+
+
+
+
+    // OpenStreetMap
+
+    // Adressen fra databasen
+    const address = "<?php echo $event->evenLocation; ?>";
+
+    // Opbyg URL'en til Nominatim geokodning
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+
+    // Lav et AJAX-kald til Nominatim for at få lat/lng baseret på adressen
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                const lat = data[0].lat;
+                const lon = data[0].lon;
+
+                // Initialiser Leaflet-kortet med lat/lng
+                let map = L.map('map').setView([lat, lon], 13);
+
+                // Brug OpenStreetMap tiles - Dette viser ophavsret for OpenStreetMap
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Tilføj en markør på kortet
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup('<b><?php echo $event->evenName; ?></b><br>Her afholdes eventet.').openPopup();
+            } else {
+                alert("Kunne ikke finde placeringen for adressen: " + address);
+            }
+        })
+        .catch(error => {
+            console.error("Fejl ved geokodning af adresse:", error);
+        });
 
 
 
