@@ -73,7 +73,7 @@ if (!empty($userStatus)) {
     <div class="row pt-5">
         <div class="col-lg-7 col-md-9 col-sm-8 col-7">
             <p class="overskrift-stor text-white"><?php echo $event->evenName; ?></p>
-            <a href="eventsduerinviterettil.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
+            <a href="eventsjegerinviterettil.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
 
         <div class="col-lg-5 col-md-2 col-sm-2 col-5 text-end pt-lg-4 pt-md-3 pt-sm-3">
