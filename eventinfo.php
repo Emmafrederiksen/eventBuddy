@@ -61,7 +61,7 @@ if (!empty($userStatus)) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
+<body class="">
 
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
     <img src="images/background1.webp" alt="background" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
@@ -70,18 +70,18 @@ if (!empty($userStatus)) {
 <!-- Første container til overskrift og tekst -->
 <div class="container">
     <div class="row py-5">
-        <div class="col-7">
+        <div class="col-lg-7 col-md-9 col-sm-8 col-7">
             <p class="overskrift-stor text-white"><?php echo $event->evenName; ?></p>
             <a href="eventsduerinviterettil.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
 
-        <div class="col-5 text-end pt-5">
+        <div class="col-lg-5 col-md-2 col-sm-2 col-5 text-end pt-lg-4 pt-md-3 pt-sm-3">
             <form method="post" action="eventinfo.php?evenId=<?php echo $evenId; ?>" id="statusForm">
                 <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
                 <input type="hidden" name="status" id="status">
 
-                <button id="deltagerBtn" type="button" class="btn-deltager brødtekst-knap rounded-pill me-3 p-1" style="width: 150px">Deltager</button>
-                <button id="ikkeDeltagerBtn" type="button" class="btn-ikke-deltager brødtekst-knap rounded-pill p-1" style="width: 150px">Deltager ikke</button>
+                <button id="deltagerBtn" type="button" class="btn-deltager brødtekst-knap rounded-pill me-lg-3 p-1" style="width: 150px">Deltager</button>
+                <button id="ikkeDeltagerBtn" type="button" class="btn-ikke-deltager brødtekst-knap rounded-pill p-1 mt-md-2 mt-sm-2 mt-2" style="width: 150px">Deltager ikke</button>
             </form>
         </div>
     </div>
@@ -89,26 +89,26 @@ if (!empty($userStatus)) {
 
 <div class="container">
     <div class="row pt-5 mt-4">
-        <div class="col-5">
+        <div class="col-sm-12 col-md-5 col-lg-5">
             <p class="overskrift-mellem text-white">Beskrivelse af event:</p>
-            <p class="brødtekst-mellem text-white"><?php echo $event->evenDescription; ?></p>
+            <p class="brødtekst-lille text-white"><?php echo $event->evenDescription; ?></p>
         </div>
 
-        <div class="col-2"></div>
+        <div class="col-md-2 col-lg-2"></div>
 
-        <div class="col-5">
+        <div class="col-sm-12 col-md-5 col-lg-5">
             <p class="overskrift-mellem text-white">Lokation:</p>
-            <p class="brødtekst-mellem text-white"><?php echo $event->evenLocation; ?></p>
+            <p class="brødtekst-lille text-white"><?php echo $event->evenLocation; ?></p>
         </div>
 
-        <div class="col-5">
-            <p class="overskrift-mellem text-white pt-5">Dato og tid:</p>
-            <p class="brødtekst-mellem text-white">
+        <div class="col-sm-12 col-md-5 col-lg-5">
+            <p class="overskrift-mellem text-white pt-lg-5">Dato og tid:</p>
+            <p class="brødtekst-lille text-white">
                 <?php echo (new DateTime($event->evenDateTime))->format('d. F Y, \k\l. H:i'); ?>
             </p>
         </div>
 
-        <div class="col-2"></div>
+        <div class="col-md-2 col-lg-2"></div>
 
         <!-- Modal til gæsteliste -->
         <div class="modal fade " id="gaestelisteModal" tabindex="-1" aria-labelledby="gaestelisteLabel" aria-hidden="true">
@@ -120,9 +120,14 @@ if (!empty($userStatus)) {
         </div>
 
         <!-- Knappen til at åbne modalet -->
-        <button type="button" class="btn btn-sekundærknap" data-bs-toggle="modal" data-bs-target="#gaestelisteModal" id="openGaesteliste">
-            Se gæsteliste
-        </button>
+        <div class="col-sm-12 col-md-5 col-lg-5">
+            <div class="pt-5 mt-5">
+                <button type="button" class="btn bg-primærknap brødtekst-knap rounded-pill me-3 p-1 w-50 " data-bs-toggle="modal" data-bs-target="#gaestelisteModal" id="openGaesteliste">
+                    Se gæsteliste
+                </button>
+            </div>
+        </div>
+
 
     </div>
 </div>
