@@ -3,7 +3,7 @@
 require "settings/init.php";
 
 // Fiktivt bruger-ID (du kan erstatte det med sessions-ID senere, når login-systemet er implementeret)
-$loggedInUserId = 1;
+$loggedInUserId = 2;
 
 // Hent alle events, som brugeren har oprettet (evuseOwner = 1)
 $eventsCreated = $db->sql("
