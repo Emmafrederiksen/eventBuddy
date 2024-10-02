@@ -19,7 +19,7 @@ if (!empty($_GET['evenId'])) {
 
 
     <div class="modal-header">
-        <p class="modal-title overskrift-mellem">Gæsteliste</p>
+        <p class="modal-title overskrift-mellem text-primærtekst">Gæsteliste</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
