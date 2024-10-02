@@ -111,9 +111,9 @@ if (!empty($userStatus)) {
         <div class="col-2"></div>
 
         <!-- Modal til gæsteliste -->
-        <div class="modal fade" id="gaestelisteModal" tabindex="-1" aria-labelledby="gaestelisteLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content" id="gaestelisteContent">
+        <div class="modal fade " id="gaestelisteModal" tabindex="-1" aria-labelledby="gaestelisteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content" id="gaestelisteContent" style="height: 500px;">
                     <!-- Indhold indlæses dynamisk via AJAX -->
                 </div>
             </div>
