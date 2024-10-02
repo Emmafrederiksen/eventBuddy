@@ -174,16 +174,29 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 }
 
 
+/* Standardstil for knappen */
 .btn-minside {
 	background-color: white;
 	color: black;
 	transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-.btn-minside:hover {
-	background-color: #c99d45;
-	color: white;
+/* Hover effekt for skærmstørrelser lg og op */
+@media (min-width: 992px) {
+	.btn-minside:hover {
+		background-color: #c99d45;
+		color: white;
+	}
 }
+
+/* For skærme mindre end lg (md, sm og xs), hold den guld uden hover-effekt */
+@media (max-width: 991px) {
+	.btn-minside {
+		background-color: #c99d45;
+		color: white;
+	}
+}
+
 
 
 
