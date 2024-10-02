@@ -42,7 +42,7 @@ require "settings/init.php";
             </div>
 
             <div class="mb-4">
-                <a href="eventsduerinviterettil.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Events jeg er inviteret til</button></a>
+                <a href="eventsjegerinviterettil.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Events jeg er inviteret til</button></a>
             </div>
 
             <div class="mb-4">
