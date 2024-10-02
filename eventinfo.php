@@ -110,9 +110,20 @@ if (!empty($userStatus)) {
 
         <div class="col-2"></div>
 
-        <div class="col-5">
-            <p class="overskrift-mellem text-white pt-5">Se gæsteliste? Klik her</p>
+        <!-- Modal til gæsteliste -->
+        <div class="modal fade" id="gaestelisteModal" tabindex="-1" aria-labelledby="gaestelisteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" id="gaestelisteContent">
+                    <!-- Indhold indlæses dynamisk via AJAX -->
+                </div>
+            </div>
         </div>
+
+        <!-- Knappen til at åbne modalet -->
+        <button type="button" class="btn btn-sekundærknap" data-bs-toggle="modal" data-bs-target="#gaestelisteModal" id="openGaesteliste">
+            Se gæsteliste
+        </button>
+
     </div>
 </div>
 
@@ -157,7 +168,28 @@ if (!empty($userStatus)) {
         statusField.value = 0; // 0 betyder deltager ikke
         statusForm.submit();
     });
+
+
+    // AJAX kald til at hente gaestelisten fra gaesteliste.php undersiden
+
+    document.getElementById('openGaesteliste').addEventListener('click', function() {
+        const evenId = <?php echo $evenId; ?>; // Hent eventId fra PHP
+        const url = "gaesteliste.php?evenId=" + evenId;
+
+        // Brug AJAX til at hente modal-indholdet
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('gaestelisteContent').innerHTML = data;
+            })
+            .catch(error => console.error('Fejl ved hentning af gæsteliste:', error));
+    });
+
+
+
 </script>
+
+
 
 </body>
 </html>
