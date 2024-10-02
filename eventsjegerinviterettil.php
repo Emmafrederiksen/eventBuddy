@@ -28,7 +28,7 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
+<body class="overflow-x-hidden overflow-y-hidden">
 
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
     <img src="images/background1.webp" alt="background" class="position-absolute top-0 start-0 w-100 h-100"
@@ -50,29 +50,26 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
     <div id="eventCarousel" class="carousel slide" data-bs-interval="false">
         <div class="carousel-inner pt-lg-5">
             <div class="carousel-item active">
-                <div class="d-flex justify-content-start">
-                    <!-- Brug den opdaterede $eventsCreated variabel til kun at vise brugerens oprettede events -->
+                <div class="row">
                     <?php
                     $count = 0;
                     foreach ($invitedEvents as $event) {
-
-                        // Starter en ny række for hvert tredje kort
+                        // Starter en ny række for hvert tredje kort (desktop), hvert andet kort (tablet), og ét kort (mobil)
                         if ($count % 3 == 0 && $count != 0) {
-                            echo '</div></div><div class="carousel-item"><div class="d-flex justify-content-start">';
+                            echo '</div></div><div class="carousel-item"><div>';
                         }
                         ?>
-
-                        <div class="card mx-5 rounded-5 mb-4" style="width: 25rem; height: 400px;">
-                            <h5 class="card-title text-center overskrift-lille py-3"><?php echo $event->evenName; ?></h5>
-                            <div class="card-body p-0" style="height: 250px;">
-                                <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="..." style="max-height: 100%; object-fit: cover;">
-                            </div>
-                            <div class="card-footer text-center" style="height: 150px;">
-                                <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se mere</a>
+                        <div class="col-12 col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">
+                            <div class="card mx-3 rounded-5 mb-4" style="width: 18rem; height: 400px;">
+                                <h5 class="card-title text-center overskrift-lille py-3"><?php echo $event->evenName; ?></h5>
+                                <div class="card-body p-0" style="height: 250px;">
+                                    <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="..." style="max-height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="card-footer text-center" style="height: 150px;">
+                                    <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se mere</a>
+                                </div>
                             </div>
                         </div>
-
-
                         <?php
                         $count++;
                     }
@@ -80,6 +77,7 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
                 </div>
             </div>
         </div>
+
         <!-- Carousel controls (previous and next) -->
         <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -91,6 +89,8 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
         </button>
     </div>
 </div>
+
+
 
 
 <!-- Bootstrap JS -->
