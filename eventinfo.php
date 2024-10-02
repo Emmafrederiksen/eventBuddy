@@ -70,7 +70,7 @@ if (!empty($userStatus)) {
 
 <!-- Første container til overskrift og tekst -->
 <div class="container">
-    <div class="row py-5">
+    <div class="row pt-5">
         <div class="col-lg-7 col-md-9 col-sm-8 col-7">
             <p class="overskrift-stor text-white"><?php echo $event->evenName; ?></p>
             <a href="eventsduerinviterettil.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
@@ -104,10 +104,8 @@ if (!empty($userStatus)) {
         </div>
 
 
-
-
         <div class="col-sm-12 col-md-5 col-lg-5">
-            <p class="overskrift-mellem text-white pt-lg-5">Dato og tid:</p>
+            <p class="overskrift-mellem text-white pt-lg-4 pt-md-4 pt-sm-4 pt-4">Dato og tid:</p>
             <p class="brødtekst-lille text-white">
                 <?php echo (new DateTime($event->evenDateTime))->format('d. F Y, \k\l. H:i'); ?>
             </p>
@@ -126,8 +124,8 @@ if (!empty($userStatus)) {
 
         <!-- Knappen til at åbne modalet -->
         <div class="col-sm-12 col-md-5 col-lg-5">
-            <div class="pt-5 mt-5">
-                <button type="button" class="btn bg-primærknap brødtekst-knap rounded-pill me-3 p-1 w-50 " data-bs-toggle="modal" data-bs-target="#gaestelisteModal" id="openGaesteliste">
+            <div class="pt-lg-5 pt-md-5 py-sm-4 py-4">
+                <button type="button" class="btn btn-minside brødtekst-knap rounded-pill me-3 p-1 w-50" data-bs-toggle="modal" data-bs-target="#gaestelisteModal" id="openGaesteliste">
                     Se gæsteliste
                 </button>
             </div>
