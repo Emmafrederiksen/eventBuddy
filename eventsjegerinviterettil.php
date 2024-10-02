@@ -46,14 +46,9 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
 </div>
 
 
-<br>
-<br>
-<br>
-<br>
-
 <div class="container">
     <div id="eventCarousel" class="carousel slide" data-bs-interval="false">
-        <div class="carousel-inner">
+        <div class="carousel-inner pt-lg-5">
             <div class="carousel-item active">
                 <div class="d-flex justify-content-start">
                     <!-- Brug den opdaterede $eventsCreated variabel til kun at vise brugerens oprettede events -->
@@ -67,15 +62,16 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
                         }
                         ?>
 
-                        <div class="card mx-5 rounded-5 mb-4" style="width: 25rem;">
+                        <div class="card mx-5 rounded-5 mb-4" style="width: 25rem; height: 400px;">
                             <h5 class="card-title text-center overskrift-lille py-3"><?php echo $event->evenName; ?></h5>
-                            <div class="card-body p-0">
-                                <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="...">
+                            <div class="card-body p-0" style="height: 250px;">
+                                <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="..." style="max-height: 100%; object-fit: cover;">
                             </div>
-                            <div class="card-footer text-center py-4">
+                            <div class="card-footer text-center" style="height: 150px;">
                                 <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se mere</a>
                             </div>
                         </div>
+
 
                         <?php
                         $count++;
