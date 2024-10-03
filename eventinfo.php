@@ -20,9 +20,10 @@ $loggedInUserId = 4; // Dette skal ændres til sessionens bruger-ID
 
 // Opdater deltagelsesstatus
 if (isset($_POST['status']) && isset($_POST['evenId'])) {
-    $status = $_POST['status'];
+    $status = $_POST['status']; // 1 for deltager, 0 for deltager ikke
     $evenId = $_POST['evenId'];
 
+    // Opdater evuseStatus i event_user_con-tabellen
     $db->sql("UPDATE event_user_con SET evuseStatus = :status 
               WHERE evuseEvenId = :evenId AND evuseUserId = :userId", [
         ":evenId" => $evenId,
@@ -34,6 +35,7 @@ if (isset($_POST['status']) && isset($_POST['evenId'])) {
     header("Location: eventinfo.php?evenId=$evenId&status_updated=1");
     exit();
 }
+
 
 // Hent brugerens status fra event_user_con-tabellen
 $userStatus = $db->sql("SELECT evuseStatus FROM event_user_con WHERE evuseEvenId = :evenId AND evuseUserId = :userId", [
