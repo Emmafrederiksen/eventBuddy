@@ -133,8 +133,7 @@ $users = $db->sql("SELECT * FROM users");
             <!-- Eventbeskrivelse -->
             <div class="mb-4 col-12 col-md-6">
                 <label for="evenDescription" class="form-label">Beskrivelse af event</label>
-                <input type="text" name="evenDescription" id="evenDescription"
-                       class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
+                <textarea type="text" name="evenDescription" id="evenDescription" class="form-control p-2 brødtekst-knap ps-3" required></textarea>
             </div>
 
             <!-- Submit-knap -->

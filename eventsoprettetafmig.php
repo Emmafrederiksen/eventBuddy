@@ -33,8 +33,9 @@ $eventsCreated = $db->sql("
 <body>
 
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
-    <img src="images/background1.webp" alt="background" class="position-absolute top-0 start-0 w-100 h-100"
-         style="object-fit: cover;">
+    <img src="images/baggrundsbillede.jpg" alt="background" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="filter: blur(0px);">
+
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1;"></div>
 </div>
 
 <!-- Første container til overskrift og tekst -->
@@ -79,7 +80,7 @@ $eventsCreated = $db->sql("
                                     <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage?>" style="height: 100%; object-fit: cover;">
                                 </div>
                                 <div class="card-footer text-center" style="height: 70px;">
-                                    <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
+                                    <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
                                 </div>
                             </div>
                         </div>
