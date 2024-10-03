@@ -74,7 +74,14 @@ $users = $db->sql("SELECT * FROM users");
 </head>
 
 
-<body class="bg-info">
+<body>
+
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
+    <img src="images/opretredigerimg.jpg" alt="background" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="filter: blur(0px);">
+
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2); z-index: 1;"></div>
+</div>
+
 
 <div class="container">
     <div class="row">
@@ -91,38 +98,38 @@ $users = $db->sql("SELECT * FROM users");
         <div class="row">
             <!-- Eventdetaljer -->
             <div class="mb-4 col-12 col-md-6">
-                <label for="evenName" class="form-label">Navn på event</label>
+                <label for="evenName" class="form-label text-white">Navn på event</label>
                 <input type="text" name="evenName" id="evenName"
                        class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
             </div>
             <div class="mb-4 col-12 col-md-6">
-                <label for="evenDateTime" class="form-label">Dato og tid</label>
+                <label for="evenDateTime" class="form-label text-white">Dato og tid</label>
                 <input type="datetime-local" name="evenDateTime" id="evenDateTime"
                        class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
             </div>
             <div class="mb-4 col-12 col-md-6">
-                <label for="evenLocation" class="form-label">Lokation</label>
+                <label for="evenLocation" class="form-label text-white">Lokation</label>
                 <input type="text" name="evenLocation" id="evenLocation"
                        class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
             </div>
 
             <!-- Indsæt billede -->
             <div class="mb-4 col-12 col-md-6">
-                <label for="evenImage" class="form-label">Indsæt billede her</label>
+                <label for="evenImage" class="form-label text-white">Indsæt billede her</label>
                 <input type="file" name="evenImage" id="evenImage"
                        class="form-control rounded-pill p-2 brødtekst-knap ps-3" required>
             </div>
 
             <div class="mb-4 col-12 col-md-6">
-                <label class="form-label">Inviter gæster</label>
+                <label for="evenGuest" class="form-label text-white">Inviter gæster</label>
 
                 <!-- En container med scroll og fast højde -->
                 <div class="form-control" style="height: auto; max-height: 80px; overflow-y: scroll; padding: 10px;">
                     <!-- Checkboxes til at vælge gæster -->
                     <?php foreach ($users as $user): ?>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="users[]" value="<?php echo $user->userId; ?>" id="users_<?php echo $user->userId; ?>">
-                            <label class="form-check-label" for="users_<?php echo $user->userId; ?>">
+                            <input class="form-check-input brødtekst-knap" type="checkbox" name="users[]" value="<?php echo $user->userId; ?>" id="users_<?php echo $user->userId; ?>">
+                            <label class="form-check-label brødtekst-knap" for="users_<?php echo $user->userId; ?>">
                                 <?php echo $user->userName; ?>
                             </label>
                         </div>
@@ -132,12 +139,12 @@ $users = $db->sql("SELECT * FROM users");
 
             <!-- Eventbeskrivelse -->
             <div class="mb-4 col-12 col-md-6">
-                <label for="evenDescription" class="form-label">Beskrivelse af event</label>
+                <label for="evenDescription" class="form-label text-white">Beskrivelse af event</label>
                 <textarea type="text" name="evenDescription" id="evenDescription" class="form-control p-2 brødtekst-knap ps-3" required></textarea>
             </div>
 
             <!-- Submit-knap -->
-            <div class="col-12 text-center">
+            <div class="col-12 mt-4 text-center">
                 <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
                 <button type="submit" class="btn btn-primærknap w-50 rounded-pill p-2 brødtekst-knap" id="opretEvent">Opret event</button>
             </div>
