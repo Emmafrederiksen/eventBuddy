@@ -51,7 +51,7 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
     <div id="eventCarousel" class="carousel slide" data-bs-interval="false">
         <div class="carousel-inner pt-lg-5">
             <div class="carousel-item active">
-                <div class="row">
+                <div class="row d-flex justify-content-start">
                     <?php
                     $count = 0;
                     foreach ($invitedEvents as $event) {
@@ -77,9 +77,9 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
                                     ?>
                                 </h5>
                                 <div class="card-body p-0" style="height: 250px;">
-                                    <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="..." style="max-height: 100%; object-fit: cover;">
+                                    <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage?>" style="height: 100%; object-fit: cover;">
                                 </div>
-                                <div class="card-footer text-center" style="height: 150px;">
+                                <div class="card-footer text-center" style="height: 70px;">
                                     <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Se mere</a>
                                 </div>
                             </div>

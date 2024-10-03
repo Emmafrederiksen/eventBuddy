@@ -3,7 +3,7 @@
 require "settings/init.php";
 
 // Fiktivt bruger-ID (du kan erstatte det med sessions-ID senere, når login-systemet er implementeret)
-$loggedInUserId = 2;
+$loggedInUserId = 4;
 
 // Hent alle events, som brugeren har oprettet (evuseOwner = 1)
 $eventsCreated = $db->sql("
@@ -69,13 +69,18 @@ $eventsCreated = $db->sql("
                         }
                         ?>
 
-                        <div class="card mx-5 rounded-5 mb-4" style="width: 25rem;">
-                            <h5 class="card-title text-center overskrift-lille py-3"><?php echo $event->evenName; ?></h5>
-                            <div class="card-body p-0">
-                                <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top" alt="...">
-                            </div>
-                            <div class="card-footer text-center py-4">
-                                <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
+                        <div class="col-12 col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">
+                            <div class="card mx-3 rounded-5 mb-4" style="width: 18rem; height: 400px;">
+                                <!-- Tilføj badget afhængigt af brugerens status -->
+                                <h5 class="card-title text-center overskrift-lille py-3">
+                                    <?php echo $event->evenName; ?>
+                                </h5>
+                                <div class="card-body p-0" style="height: 250px;">
+                                    <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage?>" style="height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="card-footer text-center" style="height: 70px;">
+                                    <a href="eventinfo.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
+                                </div>
                             </div>
                         </div>
 
