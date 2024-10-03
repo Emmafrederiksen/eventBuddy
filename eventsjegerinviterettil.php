@@ -62,7 +62,20 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON events.
                         ?>
                         <div class="col-12 col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">
                             <div class="card mx-3 rounded-5 mb-4" style="width: 18rem; height: 400px;">
-                                <h5 class="card-title text-center overskrift-lille py-3"><?php echo $event->evenName; ?></h5>
+                                <!-- Tilføj badget afhængigt af brugerens status -->
+                                <h5 class="card-title text-center overskrift-lille py-3">
+                                    <?php echo $event->evenName;
+
+                                    // Tjek brugerens status og vis det korrekte badge
+                                    if ($event->evuseStatus === null) {
+                                        echo '<span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger brødtekst-lille">!</span>';
+                                    } elseif ($event->evuseStatus == 1) {
+                                        echo '<span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success brødtekst-lille">Deltager</span>';
+                                    } else {
+                                        echo '<span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary brødtekst-lille">Deltager ikke</span>';
+                                    }
+                                    ?>
+                                </h5>
                                 <div class="card-body p-0" style="height: 250px;">
                                     <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="..." style="max-height: 100%; object-fit: cover;">
                                 </div>
