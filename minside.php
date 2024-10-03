@@ -33,7 +33,7 @@ $newEventsCount = $newEvents[0]->newEventsCount; // Antallet af nye events
 
 
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
-    <img src="images/minsidebaggrund.jpg" alt="background" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; filter: blur(0px);">
+    <img src="images/baggrundsbillede.jpg" alt="background" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; filter: blur(0px);">
 
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
 </div>
