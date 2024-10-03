@@ -1,5 +1,11 @@
 <?php
 function uploadImage($fileInputName, $targetDir = "userimages/") {
+// Tjek om filen blev uploadet korrekt
+    if (empty($_FILES[$fileInputName]['tmp_name'])) {
+        echo "Ingen fil uploadet.";
+        return false;
+    }
+
     $target_file = $targetDir . basename($_FILES[$fileInputName]["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
