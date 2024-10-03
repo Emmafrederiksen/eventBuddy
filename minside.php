@@ -1,6 +1,18 @@
 <?php
+/** @var PDO $db */
 require "settings/init.php";
+
+// Antag at brugerens ID hentes fra sessionen eller en anden kilde
+$loggedInUserId = 4; // Dette skal ændres til sessionens bruger-ID
+
+// Tjek for nye events (hvor evuseStatus er NULL, dvs. brugeren har ikke set eventet endnu)
+$newEvents = $db->sql("SELECT COUNT(*) as newEventsCount FROM event_user_con WHERE evuseUserId = :userId AND evuseStatus IS NULL", [
+    ":userId" => $loggedInUserId
+]);
+
+$newEventsCount = $newEvents[0]->newEventsCount; // Antallet af nye events
 ?>
+
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -33,30 +45,44 @@ require "settings/init.php";
             <p class="overskrift-stor text-white">Min side</p>
             <a href="index.php" class="text-decoration-underline tilbageknap brødtekst-knap">Tilbage</a>
         </div>
-
     </div>
 
     <div class="row w-100 mt-5">
         <div class="col-8 col-sm-10 col-md-8 col-lg-6 col-xl-4 offset-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4 ">
             <div class="mb-4">
-                <a href="eventsoprettetafmig.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Events oprettet af mig</button></a>
+                <a href="eventsoprettetafmig.php">
+                    <button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Events oprettet af mig</button>
+                </a>
+            </div>
+
+            <div class="mb-4 position-relative">
+                <a href="eventsjegerinviterettil.php">
+                    <button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">
+                        Events jeg er inviteret til
+                        <!-- Vis badget hvis der er nye events -->
+                        <?php if ($newEventsCount > 0): ?>
+                            <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger">
+                    <?php echo $newEventsCount; ?>
+                </span>
+                        <?php endif; ?>
+                    </button>
+                </a>
+            </div>
+
+
+            <div class="mb-4">
+                <a href="opretnytevent.php">
+                    <button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Opret nyt event</button>
+                </a>
             </div>
 
             <div class="mb-4">
-                <a href="eventsjegerinviterettil.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Events jeg er inviteret til</button></a>
+                <a href="minside.php">
+                    <button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Min profil</button>
+                </a>
             </div>
-
-            <div class="mb-4">
-                <a href="opretnytevent.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Opret nyt event</button></a>
-            </div>
-
-            <div class="mb-4">
-                <a href="minside.php"><button class="btn btn-minside w-100 rounded-pill p-3 brødtekst-knap">Min profil</button></a>
-            </div>
-
         </div>
     </div>
-
 </div>
 
 
