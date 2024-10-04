@@ -5,6 +5,10 @@ class db {
     private $prepare_result;
     public $lastQuery;
 
+    public function lastInsertId() {
+        return $this->dbCon->lastInsertId();
+    }
+
     private $DB_SERVER;
     private $DB_NAME;
     private $DB_USER;
