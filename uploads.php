@@ -12,20 +12,20 @@ function uploadImage($fileInputName, $targetDir = "userimages/") {
     // Tjek om filen er et billede
     $check = getimagesize($_FILES[$fileInputName]["tmp_name"]);
     if ($check === false) {
-        echo "File is not an image.";
+        echo "Filen er ikke et billede.";
         return false;
     }
 
 
     // Begræns filstørrelse
     if ($_FILES[$fileInputName]["size"] > 500000) {
-        echo "Sorry, your file is too large.";
+        echo "Beklager, din fil er for stor.";
         return false;
     }
 
     // Tillad visse filformater
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "webp") {
-        echo "Sorry, only JPG, JPEG, PNG & WEBP files are allowed.";
+        echo "Beklager, kun JPG, JPEG, PNG & WEBP filer er tilladt.";
         return false;
     }
 
@@ -33,7 +33,7 @@ function uploadImage($fileInputName, $targetDir = "userimages/") {
     if (move_uploaded_file($_FILES[$fileInputName]["tmp_name"], $target_file)) {
         return basename($_FILES[$fileInputName]["name"]);
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        echo "Beklager, der opstod en fejl ved at uploade din fil.";
         return false;
     }
 }
