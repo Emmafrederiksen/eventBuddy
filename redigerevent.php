@@ -3,26 +3,22 @@
 require "settings/init.php";
 require "uploads.php"; // Inkluder billedehåndteringen fra uploads.php
 
+
+// Hent eventets oplysninger fra databasen
+$evenId = $_GET["evenId"];
+$event = $db->sql("SELECT * FROM events WHERE evenId = :evenId", [":evenId" => $evenId]);
+$event = $event[0];
+
+// Hent alle brugere, så de kan vælges som gæster
+$users = $db->sql("SELECT * FROM users");
+
+// Hent de allerede inviterede gæster
+$invitedGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [":evenId" => $evenId]);
+
+
 // Hvis formularen er indsendt, opdater eventets data
 if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
     $data = $_POST['data'];
-
-    if (!empty($_FILES['evenImage']['name'])) {
-        // Håndter billedeupload via uploads.php (Hvis et nyt billede er valgt)
-        $uploadedImage = uploadImage('evenImage', 'userimages/');
-        if ($uploadedImage) {
-            $data['evenImage'] = $uploadedImage; // Gem det uploadede billednavn
-        } else {
-            echo "Fejl ved upload af billede.";
-            exit;
-        }
-    } else {
-        // Hvis der ikke er uploadet et nyt billede, behold det gamle
-        $event = $db->sql("SELECT evenImage FROM events WHERE evenId = :evenId", [":evenId" => $_POST["evenId"]]);
-        $data['evenImage'] = $event[0]->evenImage; // Gem det eksisterende billede
-    }
-
-
 
     // Opdater eventdata i databasen
     $db->sql("UPDATE events SET 
@@ -41,7 +37,6 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
     ]);
 
     // Håndter tilføjelse eller fjernelse af gæster
-    // Håndter tilføjelse og fjernelse af gæster
     if (!empty($_POST["guests"])) {
         // Hent eksisterende gæster for eventet
         $existingGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [
@@ -72,22 +67,28 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
         }
     }
 
+    // Billede håndtering/upload
+    if (!empty($_FILES['evenImage']['name'])) {
+        // Håndter billedeupload via uploads.php (Hvis et nyt billede er valgt)
+        $uploadedImage = uploadImage('evenImage', 'userimages/');
+
+        if ($uploadedImage) {
+            $data['evenImage'] = $uploadedImage; // Gem det uploadede billednavn
+        } else {
+            echo "Fejl ved upload af billede.";
+            exit;
+        }
+    } else {
+        // Hvis der ikke er uploadet et nyt billede, behold det gamle
+        $event = $db->sql("SELECT evenImage FROM events WHERE evenId = :evenId", [":evenId" => $_POST["evenId"]]);
+        $data['evenImage'] = $event[0]->evenImage; // Gem det eksisterende billede
+    }
 
     // Omdiriger efter succes
     header("Location: eventsoprettetafmig.php?success=1");
     exit();
 }
 
-// Hent alle brugere, så de kan vælges som gæster
-$users = $db->sql("SELECT * FROM users");
-
-// Hent eventets oplysninger fra databasen
-$evenId = $_GET["evenId"];
-$event = $db->sql("SELECT * FROM events WHERE evenId = :evenId", [":evenId" => $evenId]);
-$event = $event[0];
-
-// Hent de allerede inviterede gæster
-$invitedGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [":evenId" => $evenId]);
 
 // Slet event
 if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) {
@@ -99,9 +100,6 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -112,11 +110,11 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
     <meta name="copyright" content="Information om copyright">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
+<body>
 
-<body class="">
-
-
+<!-- Baggrundsbillede med overlay -->
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
     <img src="images/opretredigerimg.jpg" alt="background" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="filter: blur(0px);">
 
@@ -167,11 +165,13 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
 
                 <!-- Skjult element til at vise det eksisterende billede -->
                 <small id="existingFile" class="text-white">
-                    <?php if (!empty($event->evenImage)): ?>
-                        Nuværende billede: <?php echo $event->evenImage; ?>
-                    <?php else: ?>
-                        Der er ikke valgt nogen fil
-                    <?php endif; ?>
+                    <?php
+                    if (!empty($event->evenImage)) {
+                        echo 'Nuværende billede: ' . $event->evenImage;
+                    } else {
+                        echo 'Der er ikke valgt nogen fil';
+                    }
+                    ?>
                 </small>
             </div>
 
