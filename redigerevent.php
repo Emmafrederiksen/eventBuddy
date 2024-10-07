@@ -62,11 +62,11 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
             ":evenId" => $_POST["evenId"]
         ]);
 
-        $existingGuestIds = array_column($existingGuests, 'evuseUserId'); // Konverter til array med userId'er
+        $existingGuestId = array_column($existingGuests, 'evuseUserId'); // Konverter til array med userId'er
 
         // Tilføj nye gæster
         foreach ($_POST["guests"] as $guest) {
-            if (!in_array($guest, $existingGuestIds)) {
+            if (!in_array($guest, $existingGuestId)) {
                 $db->sql("INSERT INTO event_user_con (evuseEvenId, evuseUserId, evuseOwner) 
                       VALUES (:evuseEvenId, :evuseUserId, 0)", [
                     ":evuseEvenId" => $_POST["evenId"],
@@ -76,7 +76,7 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
         }
 
         // Fjern gæster, der ikke længere er valgt
-        foreach ($existingGuestIds as $guestId) {
+        foreach ($existingGuestId as $guestId) {
             if (!in_array($guestId, $_POST["guests"])) {
                 $db->sql("DELETE FROM event_user_con WHERE evuseEvenId = :evenId AND evuseUserId = :userId", [
                     ":evenId" => $_POST["evenId"],
