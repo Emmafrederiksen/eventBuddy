@@ -29,7 +29,7 @@ if (!empty($_GET['evenId'])) {
                     <?php echo $guest->userName; ?>
                     <span class="badge bg-dark-subtle text-black-50 w-25 align-content-center">
                         <?php
-                        if ($guest -> evuseOwner === 1) {
+                        if ($guest -> evuseOwner == 1) {
                             echo "Ejer";
                         } else if ($guest->evuseStatus === null) {
                             echo "Inviteret";
