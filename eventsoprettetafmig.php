@@ -5,11 +5,9 @@ require "settings/init.php";
 $loggedInUserId = 4;
 
 // Hent alle events, som brugeren har oprettet (evuseOwner = 1)
-$eventsCreated = $db->sql("
-    SELECT * FROM events JOIN event_user_con ON evenId = evuseEvenId 
+$eventsCreated = $db->sql(" SELECT * FROM events JOIN event_user_con ON evenId = evuseEvenId 
     WHERE evuseUserId = :userId
-    AND evuseOwner = 1", [
-    ":userId" => $loggedInUserId
+    AND evuseOwner = 1", [":userId" => $loggedInUserId
 ]);
 
 ?>
@@ -61,13 +59,13 @@ $eventsCreated = $db->sql("
                 <div class="swiper-slide d-flex justify-content-center">
                     <div class="card mt-5 rounded-5">
 
-                        <h5 class="card-header text-center overskrift-lille py-3"><?php echo $event -> evenName?></h5>
+                        <h5 class="card-header text-center overskrift-lille py-3"><?php echo $event -> evenName; ?></h5>
 
                         <div class="card-body p-0" style="height: 200px;">
                             <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage; ?>" style="height: 100%; width: 100%; object-fit: cover;">
                         </div>
 
-                        <div class="card-footer text-center pt-3" style="height: 70px;">
+                        <div class="card-footer text-center pt-3" style="height: 80px;">
                             <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger</a>
 
                         </div>
@@ -79,8 +77,8 @@ $eventsCreated = $db->sql("
         </div>
 
         <!-- Navigation buttons -->
-        <div class="swiper-button-prev text-white tilbageknap"></div>
-        <div class="swiper-button-next text-white tilbageknap"></div>
+        <div class="swiper-button-prev tilbageknap mt-2"></div>
+        <div class="swiper-button-next tilbageknap mt-2"></div>
 
     </div>
 
