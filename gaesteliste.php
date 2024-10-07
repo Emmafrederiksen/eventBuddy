@@ -6,12 +6,12 @@ if (!empty($_GET['evenId'])) {
     $evenId = $_GET['evenId'];
     // Hent alle gæster til eventet og deres status
     $guests = $db->sql("SELECT userName, evuseStatus, evuseOwner
-                        FROM users 
-                        JOIN event_user_con ON userId = evuseUserId 
-                        WHERE evuseEvenId = :evenId
-                        ORDER BY evuseOwner DESC, 
-                        evuseStatus IS NULL DESC, 
-                        evuseStatus DESC", [":evenId" => $evenId]);
+    FROM users 
+    JOIN event_user_con ON userId = evuseUserId 
+    WHERE evuseEvenId = :evenId
+    ORDER BY evuseOwner DESC, 
+    evuseStatus IS NULL DESC, 
+    evuseStatus DESC", [":evenId" => $evenId]);
 
     ?>
 
