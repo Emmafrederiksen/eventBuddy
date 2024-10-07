@@ -2,16 +2,16 @@
 /** @var PDO $db */
 require "settings/init.php";
 
-// Fiktivt bruger-ID (du kan erstatte det med sessions-ID senere, når login-systemet er implementeret)
 $loggedInUserId = 4;
 
 // Hent alle events, som brugeren har oprettet (evuseOwner = 1)
 $eventsCreated = $db->sql("
-    SELECT * FROM events JOIN event_user_con ON events.evenId = event_user_con.evuseEvenId 
-    WHERE event_user_con.evuseUserId = :userId
-    AND event_user_con.evuseOwner = 1", [
+    SELECT * FROM events JOIN event_user_con ON evenId = evuseEvenId 
+    WHERE evuseUserId = :userId
+    AND evuseOwner = 1", [
     ":userId" => $loggedInUserId
 ]);
+
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +26,7 @@ $eventsCreated = $db->sql("
     <meta name="copyright" content="Information om copyright">
 
     <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -49,97 +50,71 @@ $eventsCreated = $db->sql("
 </div>
 
 
-<br>
-<br>
-<br>
-<br>
-
 <div class="container">
-    <div id="eventCarousel" class="carousel slide" data-bs-interval="false">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="d-flex justify-content-start">
-                    <!-- Brug den opdaterede $eventsCreated variabel til kun at vise brugerens oprettede events -->
-                    <?php
-                    $count = 0;
-                    foreach ($eventsCreated as $event) {
 
-                        // Starter en ny række for hvert tredje kort
-                        if ($count % 3 == 0 && $count != 0) {
-                            echo '</div></div><div class="carousel-item"><div class="d-flex justify-content-start">';
-                        }
-                        ?>
+    <div class="swiper">
 
-                        <div class="col-12 col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">
-                            <div class="card mx-3 rounded-5 mb-4" style="width: 18rem; height: 400px;">
-                                <!-- Tilføj badget afhængigt af brugerens status -->
-                                <h5 class="card-title text-center overskrift-lille py-3">
-                                    <?php echo $event->evenName; ?>
-                                </h5>
-                                <div class="card-body p-0" style="height: 250px;">
-                                    <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage?>" style="height: 100%; object-fit: cover;">
-                                </div>
-                                <div class="card-footer text-center" style="height: 70px;">
-                                    <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger event</a>
-                                </div>
-                            </div>
+        <div class="swiper-wrapper">
+
+            <?php foreach ($eventsCreated as $event): ?>
+
+                <div class="swiper-slide d-flex justify-content-center">
+                    <div class="card mt-5 rounded-5">
+
+                        <h5 class="card-header text-center overskrift-lille py-3"><?php echo $event -> evenName?></h5>
+
+                        <div class="card-body p-0" style="height: 200px;">
+                            <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage; ?>" style="height: 100%; width: 100%; object-fit: cover;">
                         </div>
 
-                        <?php
-                        $count++;
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-        <!-- Carousel controls (previous and next) -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-</div>
+                        <div class="card-footer text-center pt-3" style="height: 70px;">
+                            <a href="redigerevent.php?evenId=<?php echo $event->evenId; ?>" class="btn btn-primærknap ps-4 pe-4 py-2 brødtekst-knap rounded-pill">Rediger</a>
 
+                        </div>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="swiper-button-prev text-white tilbageknap"></div>
+        <div class="swiper-button-next text-white tilbageknap"></div>
+
+    </div>
+
+</div>
 
 <!-- Bootstrap JS -->
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const carousel = document.getElementById('eventCarousel');
-        const prevButton = document.querySelector('.carousel-control-prev');
-        const nextButton = document.querySelector('.carousel-control-next');
-        const carouselItems = document.querySelectorAll('.carousel-item');
 
-        // Tjek for at opdatere pilene baseret på slide position
-        function updateCarouselControls() {
-            const activeIndex = Array.from(carouselItems).findIndex(item => item.classList.contains('active'));
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        breakpoints: {
+            576: {
+                slidesPerView: 1,
+            },
+            992: {
+                slidesPerView: 2,
+            },
+            1200: {
+                slidesPerView: 3,
+            },
+        },
+        loop: false, // Du kan også sætte loop til true, hvis du vil have det som uendelig loop
+        watchOverflow: true, // Slukker for navigation og pagination, hvis der ikke er nok slides
 
-            // Skjul venstre pil, hvis vi er på første slide
-            if (activeIndex === 0) {
-                prevButton.style.display = 'none';
-            } else {
-                prevButton.style.display = 'block';
-            }
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
 
-            // Skjul højre pil, hvis vi er på sidste slide
-            if (activeIndex === carouselItems.length - 1) {
-                nextButton.style.display = 'none';
-            } else {
-                nextButton.style.display = 'block';
-            }
-        }
-
-        // Lyt til carousel-events for at opdatere pilene, når der skiftes slide
-        carousel.addEventListener('slid.bs.carousel', updateCarouselControls);
-
-        // Kald funktionen når siden først indlæses
-        updateCarouselControls();
     });
+
 </script>
 
 </body>
