@@ -203,7 +203,7 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
 
             <!-- Submit-knap i bunden -->
             <div class="col-12 text-center mt-4">
-                <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
+                <input type="hidden" name="evenId" value="<?php echo $event -> evenId; ?>">
                 <button type="submit" class="btn btn-primærknap knap w-50 rounded-pill p-2 brødtekst-knap" id="redigerEvent">Opdater eventet</button>
             </div>
 
