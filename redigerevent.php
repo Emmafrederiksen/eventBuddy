@@ -3,7 +3,6 @@
 require "settings/init.php";
 require "uploads.php"; // Inkluder billedehåndteringen fra uploads.php
 
-
 // Hent eventets oplysninger fra databasen
 $evenId = $_GET["evenId"];
 $event = $db->sql("SELECT * FROM events WHERE evenId = :evenId", [":evenId" => $evenId]);
@@ -15,26 +14,46 @@ $users = $db->sql("SELECT * FROM users");
 // Hent de allerede inviterede gæster
 $invitedGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [":evenId" => $evenId]);
 
-
 // Hvis formularen er indsendt, opdater eventets data
 if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
     $data = $_POST['data'];
 
+    // Billede håndtering/upload
+    if (!empty($_FILES['evenImage']['name'])) {
+        $uploadedImage = uploadImage('evenImage', 'userimages/');
+        if ($uploadedImage) {
+            $data['evenImage'] = $uploadedImage; // Gem det uploadede billednavn
+        } else {
+            echo "Fejl ved upload af billede.";
+            exit;
+        }
+    } else {
+        // Behold det gamle billede
+        $eventImage = $db->sql("SELECT evenImage FROM events WHERE evenId = :evenId", [":evenId" => $_POST["evenId"]]);
+        if ($eventImage && isset($eventImage[0]->evenImage)) {
+            $data['evenImage'] = $eventImage[0]->evenImage; // Gem det eksisterende billede
+        } else {
+            echo "Fejl med at hente eksisterende billede fra databasen.";
+            exit;
+        }
+    }
+
     // Opdater eventdata i databasen
-    $db->sql("UPDATE events SET 
+        $result = $db->sql("UPDATE events SET 
         evenName = :evenName, 
         evenDateTime = :evenDateTime, 
         evenLocation = :evenLocation, 
         evenDescription = :evenDescription, 
         evenImage = :evenImage 
         WHERE evenId = :evenId", [
-        ":evenName" => $data["evenName"],
-        ":evenDateTime" => $data["evenDateTime"],
-        ":evenLocation" => $data["evenLocation"],
-        ":evenDescription" => $data["evenDescription"],
-        ":evenImage" => $data["evenImage"],
-        ":evenId" => $_POST["evenId"]
-    ]);
+            ":evenName" => $data["evenName"],
+            ":evenDateTime" => $data["evenDateTime"],
+            ":evenLocation" => $data["evenLocation"],
+            ":evenDescription" => $data["evenDescription"],
+            ":evenImage" => $data["evenImage"],
+            ":evenId" => $_POST["evenId"]
+        ]);
+
 
     // Håndter tilføjelse eller fjernelse af gæster
     if (!empty($_POST["guests"])) {
@@ -67,28 +86,10 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
         }
     }
 
-    // Billede håndtering/upload
-    if (!empty($_FILES['evenImage']['name'])) {
-        // Håndter billedeupload via uploads.php (Hvis et nyt billede er valgt)
-        $uploadedImage = uploadImage('evenImage', 'userimages/');
-
-        if ($uploadedImage) {
-            $data['evenImage'] = $uploadedImage; // Gem det uploadede billednavn
-        } else {
-            echo "Fejl ved upload af billede.";
-            exit;
-        }
-    } else {
-        // Hvis der ikke er uploadet et nyt billede, behold det gamle
-        $event = $db->sql("SELECT evenImage FROM events WHERE evenId = :evenId", [":evenId" => $_POST["evenId"]]);
-        $data['evenImage'] = $event[0]->evenImage; // Gem det eksisterende billede
-    }
-
     // Omdiriger efter succes
     header("Location: eventsoprettetafmig.php?success=1");
     exit();
 }
-
 
 // Slet event
 if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) {
@@ -99,6 +100,7 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="da">
@@ -203,7 +205,7 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
 
             <!-- Submit-knap i bunden -->
             <div class="col-12 text-center mt-4">
-                <input type="hidden" name="evenId" value="<?php echo $event -> evenId; ?>">
+                <input type="hidden" name="evenId" value="<?php echo $event->evenId; ?>">
                 <button type="submit" class="btn btn-primærknap knap w-50 rounded-pill p-2 brødtekst-knap" id="redigerEvent">Opdater eventet</button>
             </div>
 
