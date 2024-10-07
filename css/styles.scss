@@ -77,19 +77,19 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	font-size: 2rem;
 
 	@media (max-width: 1200px) {
-		font-size: 1.5rem;
+		font-size: 2rem;
 	}
 
 	@media (max-width: 992px) {
-		font-size: 1rem;
+		font-size: 2rem;
 	}
 
 	@media (max-width: 768px) {
-		font-size: 0.5rem;
+		font-size: 2rem;
 	}
 
 	@media (max-width: 576px) {
-		font-size: 1rem;
+		font-size: 1.5rem;
 	}
 }
 
@@ -187,12 +187,12 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 .tilbageknap {
 	background-color: transparent; /* Sørger for ingen baggrundsfarve */
-	color: white; /* Startfarve for teksten */
+	color: white !important; /* Startfarve for teksten */
 	transition: color 0.4s ease; /* Overgang for kun farven */
 }
 
 .tilbageknap:hover {
-	color: #c99d45; /* Teksten skifter til guld ved hover */
+	color: #c99d45 !important; /* Teksten skifter til guld ved hover */
 }
 
 
@@ -203,21 +203,16 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	object-fit: cover; /* Sørger for, at billedet bliver beskåret, men fylder rummet */
 }
 
-/* Sikrer, at kortet har en fast højde, så det ser ens ud */
-.card {
-	height: 400px; /* Fast højde på kortet */
-	width: 18rem; /* Fast bredde på kortet */
-}
 
-/* Responsivt design for mindre skærme */
-@media (max-width: 576px) {
+/* Responsivt design for s skærme og mindre */
+@media (max-width: 767px) {
 	.card {
 		height: 350px;
-
+		width: 22rem;
 	}
 }
 
-/* Responsivt design for mellem skærme */
+/* Responsivt design for md skærme */
 @media (min-width: 768px) {
 	.card {
 		height: 400px;
@@ -225,15 +220,15 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	}
 }
 
-/* Responsivt design for store skærme og over */
+/* Responsivt design for L skærme */
 @media (min-width: 992px) {
 	.card {
-		height: 450px;
+		height: 400px;
 		width: 20rem;
 	}
 }
 
-/* Responsivt design for ekstra store skærme og over */
+/* Responsivt design for XL skærme */
 @media (min-width: 1200px) {
 	.card {
 		height: 400px;
@@ -242,8 +237,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	}
 }
 
-.swiper-button-disabled {
-	display: none;
+/* Responsivt design for XXL og over */
+@media (min-width: 1400px) {
+	.card {
+		height: 400px;
+		width: 20rem;
+
+	}
 }
 
 
