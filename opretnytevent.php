@@ -134,7 +134,6 @@ if (!empty($_POST)) {
 
 
             <div class="col-12 mt-4 text-center">
-                <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
                 <button type="submit" class="btn btn-primærknap w-50 rounded-pill p-2 brødtekst-knap" id="opretEvent">Opret event</button>
             </div>
         </div>
