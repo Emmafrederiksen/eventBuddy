@@ -62,7 +62,7 @@ $eventsCreated = $db->sql(" SELECT * FROM events JOIN event_user_con ON evenId =
                         <h5 class="card-header text-center overskrift-lille py-3"><?php echo $event -> evenName; ?></h5>
 
                         <div class="card-body p-0" style="height: 200px;">
-                            <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage; ?>" style="height: 100%; width: 100%; object-fit: cover;">
+                            <img src="userimages/<?php echo $event->evenImage; ?>" class="card-img-top img-fluid" alt="<?php echo $event->evenImage; ?>">
                         </div>
 
                         <div class="card-footer text-center pt-3" style="height: 80px;">
