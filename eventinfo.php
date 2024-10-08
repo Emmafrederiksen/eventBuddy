@@ -2,21 +2,26 @@
 /** @var PDO $db */
 require "settings/init.php";
 
-// Tjek om evenId er sat i URL'en, ellers vis en fejlmeddelelse
-if (empty($_GET["evenId"])) {
-    echo "evenId mangler i URL'en!";
-    exit;
-}
+$loggedInUserId = 4;
 
 // Hent evenId fra URL'en
 $evenId = $_GET["evenId"];
-
-// Hent eventets oplysninger fra databasen
 $event = $db->sql("SELECT * FROM events WHERE evenId = :evenId", [":evenId" => $evenId]);
 $event = $event[0];
 
-// Antag at brugerens ID hentes fra sessionen eller en anden kilde
-$loggedInUserId = 4; // Dette skal ændres til sessionens bruger-ID
+
+// Hent brugerens status fra event_user_con-tabellen
+$userStatus = $db->sql("SELECT evuseStatus FROM event_user_con WHERE evuseEvenId = :evenId AND evuseUserId = :userId", [
+    ":evenId" => $evenId,
+    ":userId" => $loggedInUserId
+]);
+
+// Brug status til at bestemme knappefarven
+if (!empty($userStatus)) {
+    $status = $userStatus[0]->evuseStatus; // 1 for deltager, 0 for deltager ikke
+} else {
+    $status = null; // Hvis brugeren ikke har angivet status endnu
+}
 
 // Opdater deltagelsesstatus
 if (isset($_POST['status']) && isset($_POST['evenId'])) {
@@ -36,35 +41,30 @@ if (isset($_POST['status']) && isset($_POST['evenId'])) {
     exit();
 }
 
-
-// Hent brugerens status fra event_user_con-tabellen
-$userStatus = $db->sql("SELECT evuseStatus FROM event_user_con WHERE evuseEvenId = :evenId AND evuseUserId = :userId", [
-    ":evenId" => $evenId,
-    ":userId" => $loggedInUserId
-]);
-
-// Brug status til at bestemme knappefarven
-if (!empty($userStatus)) {
-    $status = $userStatus[0]->evuseStatus; // 1 for deltager, 0 for deltager ikke
-} else {
-    $status = null; // Hvis brugeren ikke har angivet status endnu
-}
 ?>
 
 <!DOCTYPE html>
+
 <html lang="da">
+
 <head>
     <meta charset="utf-8">
+
     <title><?php echo $event->evenName; ?></title>
+
     <meta name="robots" content="All">
     <meta name="author" content="Udgiver">
-    <meta name="copyright" content="Information om copyright">
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
 
-<body class="">
+    <meta name="copyright" content="Information om copyright">
+
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
 
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1;">
     <img src="images/baggrundsbillede.jpg" alt="background" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="filter: blur(0px);">
@@ -73,7 +73,6 @@ if (!empty($userStatus)) {
 </div>
 
 
-<!-- Første container til overskrift og tekst -->
 <div class="container">
     <div class="row pt-5">
         <div class="col-lg-7 col-md-9 col-sm-8 col-7">
@@ -86,12 +85,13 @@ if (!empty($userStatus)) {
                 <input type="hidden" name="evenId" value="<?php echo $evenId; ?>">
                 <input type="hidden" name="status" id="status">
 
-                <button id="deltagerBtn" type="button" class="btn-deltager brødtekst-knap rounded-pill me-lg-3 p-1" style="width: 150px">Deltager</button>
-                <button id="ikkeDeltagerBtn" type="button" class="btn-ikke-deltager brødtekst-knap rounded-pill p-1 mt-md-2 mt-sm-2 mt-2" style="width: 150px">Deltager ikke</button>
+                <button id="deltagerBtn" type="button" class="brødtekst-knap rounded-pill me-lg-3 p-1" style="width: 150px">Deltager</button>
+                <button id="ikkeDeltagerBtn" type="button" class="brødtekst-knap rounded-pill p-1 mt-md-2 mt-sm-2 mt-2" style="width: 150px">Deltager ikke</button>
             </form>
         </div>
     </div>
 </div>
+
 
 <div class="container">
     <div class="row pt-5 mt-4">
@@ -118,7 +118,6 @@ if (!empty($userStatus)) {
 
         <div class="col-md-2 col-lg-2"></div>
 
-        <!-- Modal til gæsteliste -->
         <div class="modal fade " id="gaestelisteModal" tabindex="-1" aria-labelledby="gaestelisteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content" id="gaestelisteContent" style="height: 500px;">
@@ -127,7 +126,6 @@ if (!empty($userStatus)) {
             </div>
         </div>
 
-        <!-- Knappen til at åbne modalet -->
         <div class="col-sm-12 col-md-5 col-lg-5">
             <div class="pt-lg-5 pt-md-5 py-sm-4 py-4">
                 <button type="button" class="btn btn-minside brødtekst-knap rounded-pill me-3 p-1 w-50" data-bs-toggle="modal" data-bs-target="#gaestelisteModal" id="openGaesteliste">
@@ -135,7 +133,6 @@ if (!empty($userStatus)) {
                 </button>
             </div>
         </div>
-
 
     </div>
 </div>
@@ -174,6 +171,15 @@ if (!empty($userStatus)) {
         deltagerBtn.style.color = '#333';
         deltagerBtn.style.border = '1px solid #ccc';
         deltagerBtn.style.opacity = '0.6';
+    } else {
+        // Brugeren har ikke angivet status endnu (null)
+        deltagerBtn.style.backgroundColor = '#f0f0f0'; // Neutral farve
+        deltagerBtn.style.color = '#333';
+        deltagerBtn.style.border = '1px solid #333';
+
+        ikkeDeltagerBtn.style.backgroundColor = '#f0f0f0'; // Neutral farve
+        ikkeDeltagerBtn.style.color = '#333';
+        ikkeDeltagerBtn.style.border = '1px solid #333';
     }
 
     // Håndter klik på knapper
@@ -188,12 +194,10 @@ if (!empty($userStatus)) {
     });
 
 
-
-
     // AJAX kald til at hente gaestelisten fra gaesteliste.php undersiden
 
     document.getElementById('openGaesteliste').addEventListener('click', function() {
-        const evenId = <?php echo $evenId; ?>; // Hent eventId fra PHP
+        const evenId = <?php echo $evenId; ?>;
         const url = "gaesteliste.php?evenId=" + evenId;
 
         // Brug AJAX til at hente modal-indholdet
@@ -204,8 +208,6 @@ if (!empty($userStatus)) {
             })
             .catch(error => console.error('Fejl ved hentning af gæsteliste:', error));
     });
-
-
 
 
     // OpenStreetMap
@@ -243,11 +245,7 @@ if (!empty($userStatus)) {
             console.error("Fejl ved geokodning af adresse:", error);
         });
 
-
-
 </script>
-
-
 
 </body>
 </html>
