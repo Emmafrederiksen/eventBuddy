@@ -11,7 +11,7 @@ $event = $event[0];
 // Hent alle brugere, så de kan vælges som gæster
 $users = $db->sql("SELECT * FROM users");
 
-// Hent de allerede inviterede gæster
+// Henter de nuværende inviterede gæster, inden brugeren foretager ændringer på eventet.
 $invitedGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [":evenId" => $evenId]);
 
 // Hvis formularen er indsendt, opdater eventets data
@@ -57,7 +57,7 @@ if (!empty($_POST['evenId']) && !empty($_POST['data'])) {
 
     // Håndter tilføjelse eller fjernelse af gæster
     if (!empty($_POST["guests"])) {
-        // Hent eksisterende gæster for eventet
+        // existingGuests bruges til at håndtere opdateringen af de inviterede gæster, efter brugeren har foretaget ændringer og sendt formularen.
         $existingGuests = $db->sql("SELECT evuseUserId FROM event_user_con WHERE evuseEvenId = :evenId", [
             ":evenId" => $_POST["evenId"]
         ]);
@@ -134,10 +134,11 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
 </div>
 
 
+
 <div class="container">
     <form method="post" action="redigerevent.php" enctype="multipart/form-data" id="redigerEventForm">
         <div class="row">
-            <!-- Første række med to felter -->
+
             <div class="mb-4 col-12 col-lg-6">
                 <label for="evenName" class="form-label text-white">Navn på event</label>
                 <input type="text" name="data[evenName]" id="evenName"
@@ -151,7 +152,6 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
                        class="form-control rounded-pill p-2 brødtekst-knap" required>
             </div>
 
-            <!-- Anden række med to felter -->
             <div class="mb-4 col-12 col-lg-6">
                 <label for="evenLocation" class="form-label text-white">Lokation</label>
                 <input type="text" name="data[evenLocation]" id="evenLocation"
@@ -165,7 +165,7 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
                 <!-- Filinput til nyt billede -->
                 <input type="file" name="evenImage" id="evenImage" class="form-control rounded-pill p-2 brødtekst-knap" aria-label="Indsæt billede">
 
-                <!-- Skjult element til at vise det eksisterende billede -->
+                <!-- Lille element til at vise det eksisterende billedes tekst -->
                 <small id="existingFile" class="text-white">
                     <?php
                     if (!empty($event->evenImage)) {
@@ -177,7 +177,6 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
                 </small>
             </div>
 
-
             <div class="mb-4 col-12 col-lg-6">
                 <label for="evenGuest" class="form-label text-white">Inviter gæster</label>
 
@@ -185,9 +184,9 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
                     <?php foreach ($users as $user): ?>
                         <div class="form-check">
                             <input class="form-check-input brødtekst-knap" type="checkbox" name="guests[]" value="<?php echo $user->userId; ?>"
-                                   id="guest_<?php echo $user->userId; ?>"
+                                   id="guest<?php echo $user->userId; ?>"
                                 <?php echo in_array($user->userId, array_column($invitedGuests, 'evuseUserId')) ? 'checked' : ''; ?>>
-                            <label class="form-check-label brødtekst-knap" for="guest_<?php echo $user->userId; ?>">
+                            <label class="form-check-label brødtekst-knap" for="guest<?php echo $user->userId; ?>">
                                 <?php echo $user->userName; ?>
                             </label>
                         </div>
@@ -195,21 +194,16 @@ if (!empty($_GET['delete']) && $_GET['delete'] == 1 && !empty($_GET['evenId'])) 
                 </div>
             </div>
 
-
-
             <div class="mb-4 col-12 col-lg-6" >
                 <label for="evenDescription" class="form-label text-white" >Beskrivelse af event</label>
                 <textarea name="data[evenDescription]" id="evenDescription" class="form-control p-2 brødtekst-knap" required><?php echo $event->evenDescription; ?></textarea>
             </div>
 
-
-            <!-- Submit-knap i bunden -->
             <div class="col-12 text-center mt-4">
                 <input type="hidden" name="evenId" value="<?php echo $event->evenId; ?>">
                 <button type="submit" class="btn btn-primærknap knap w-50 rounded-pill p-2 brødtekst-knap" id="redigerEvent">Opdater eventet</button>
             </div>
 
-            <!-- Link til sletning af event -->
             <div class="col-12 text-center mt-4">
                 <p class="text-white">Ønsker du at slette dit event?
                     <a href="redigerevent.php?delete=1&evenId=<?php echo $event->evenId; ?>" class="deleteLink text-white fw-medium text-decoration-underline brødtekst-lille">Klik her</a></p>
