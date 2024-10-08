@@ -1,6 +1,7 @@
 <?php
 function uploadImage($fileInputName, $targetDir = "userimages/") {
-// Tjek om filen blev uploadet korrekt
+
+// Tjekker om der er uploadet en fil
     if (empty($_FILES[$fileInputName]['tmp_name'])) {
         echo "Ingen fil uploadet.";
         return false;
@@ -15,7 +16,6 @@ function uploadImage($fileInputName, $targetDir = "userimages/") {
         echo "Filen er ikke et billede.";
         return false;
     }
-
 
     // Begræns filstørrelse
     if ($_FILES[$fileInputName]["size"] > 500000) {
