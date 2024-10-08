@@ -37,7 +37,7 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON evenId 
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1;"></div>
 </div>
 
-<!-- Første container til overskrift og tekst -->
+
 <div class="container">
     <div class="row">
         <div class="py-5">
@@ -120,6 +120,7 @@ $invitedEvents  = $db->sql(" SELECT * FROM events JOIN event_user_con ON evenId 
             },
         },
         loop: false,
+        watchOverflow: true,
 
         navigation: {
             nextEl: '.swiper-button-next',
